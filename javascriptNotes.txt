@@ -1,0 +1,668 @@
++++++++++++++
+variable
+++++++++++++
+=> variable is like container it is used to hold the value.
+
+=> type of variable
+	1. var(function scoped)
+	2. let(block scope)
+	3. const(bloekd scope)
+eg::
+	var name="suman";
+	let name="kumar";
+	const pi=3.14;
+
+=> Global variable: if we define variable in .js file then it is called global variable.
+
+=> function scope variable : if we define variable inside function, then it is called function scope variable.
+
+eg::
+	let index.js file 
+	var name="suman"; // global variable
+	function print(){
+		int name1="aman"; // function scope variable
+		console.log(name1);
+	}
+	print(); // function call to execute print function
+	console.log(name1) // error because name1 scope is inside function only
+
+Note:a. default value of variable is undefine.
+	eg: var a;
+	    console.log(a); // it will print undefine
+     b. if scope of variable is inside function, if we try to access outside the function then we will get syntax error.
+     c. if we try to access varable that is not define then we will get error, variable is not define.
+     d. if we define variable as constat, then later we cant't change, if we try to change we will get, Identifier 'var' has already been declared.
+
++++++++++++++++++++++
+Data type
+++++++++++++++++++++
+It is used to store data in memory.
+
+=>javascript is dynamically typed language, which means the data type id idebtified during execution. programer not need to decalare data type.
+
+1. String - primitive
+2. Number - primitive(2,NaN, Infinity)
+3. Bigint - primitive
+4. Boolean- primitive
+5. Undefine- primitive
+6. symbol  - primitive
+7. Object  - Non Primitive
+8. Array   - Non Primitive
+
+=> Object : object are non primitive data type. and it is mutable. 
+	    -> object is collection of properties, where each property has a key and a value. where
+			. key should be string and symbol
+			. value could be of any datatype
+eg::
+	{
+		name:"suman",
+		company:"cognizant"
+	}
+
+=> Array
+	Array is  a datatype containing data in sequential order. An array can hold multiple value with multiple datatype.
+	var arr=["suman",23];
+
+Note 1. Array is in square bracket but object is in curly bracket.
+
+++++++++++++++
+operator
+++++++++++++
+typeof operator check the data type of a given variable. it can be used with any datatype, including object,array and even null value.
+
+eg1: var arr=[1,2,3,4];
+     console.log(typeof arr);
+     
+     o/p: object
+
+eg2:
+	var car={
+    	"waganar":200,
+    	"BMW":  300
+    
+	}
+	console.log(typeof car);
+	o/p: object
+
+note: we can use typeof operator to check before performing uppercase.
+	if(typeof name==="string")
+
+++++++++++++++++
+ternar operator
+++++++++++++++++
+eg1:
+
+var islogedIn= true;
+ islogedIn ? console.log("susscessfully loged in") : console.log("Invalid user name and password");
+
+
++++++++++++++++++++++
+Switch statement
++++++++++++++++++++++
+eg1:
+var x=1;
+switch(x){
+    case 1:console.log("sunday");
+        break;
+    default : console.log("otherday");
+}
+o/p:sunday
+
+Switch with return: we can use return keyword instead of break for ever case. it will be helpfullc, if we use switch statement inside the function.it
+     		    will serve two purpose, one break the switch block  and second it will  return value.
+
+
+var x=1;
+function weekdays(x){
+    switch(x){
+    case 1:
+        return "Sunday";
+    default :
+        return "Other day";
+    }
+    
+}
+console.log(weekdays(x));
+
+o/p:sunday
+
+++++++++++++++++
+operator
+++++++++++++++++
+ => Equal(==): compare two value for equality, and return true if they are equal in value.
+=>  Strict Equal(===): compare two value of eqality and type, and return true if both value and type are equal, other wise return false.
+=>  NotEqual(!=)
+=>  Strict NotEqual(!==)
+
+++++++++++++++
+Array
++++++++++++++
+ let arr=[1,"suman"];
+
+Array literals: let arr1=Array(1,"suman");
+
+-> method in array
+ 	1)arr.length
+	2)pop()
+	3)hift()
+	4)unshift()
+	5)concat()
+	6)join()
+	7)reverse()
+	8)slice()
+	9) spice()
+	10)indexOf()
+	11) toString()
+	12) flat()
+	13) isArray()
+
+=> isArray: it will return true/false, check whether it is array or not
+   eg:  let arr= Array("sumana");
+	console.log(Array.isArray(arr));
+	o/p:true
+
+=> toString: convert any object into string
+eg: let arr= Array("sumana");
+    let name=arr.toString();
+    console.log(typeof name);
+    o/p:string
+
+=> join
+eg: 
+let arr= Array("sumana","kuamr",1);
+
+var result=arr.join('-'); // converted array to string
+console.log(result);
+o/p:sumana-kuamr-1
+
+++++++++++++++++++++
+object method
++++++++++++++++++++
+1. Object.keys()
+2. Object.values()
+3. Object.entries()
+4. Object.assign()
+5. Object.freeze() & Object.isfrozen()
+6. Object.seal() & Object.isSeal()
+7. Object.fromEntries()
+8. Object.create()
+9. Object.hasOwn()
+10. Object.getOwnPropertyNames();
+11. Object.getOwnPropertyDescriptor()
+12. Object.getOwnPropertyDescriptors()
+13. Object.defineProperties()
+14. Object.isExtensible()
+15 Object.PreventExtension()
+
+=> Object.Keys()
+
+let car={
+    waganor:200,
+    bmw:300
+}
+var key=Object.keys(car);
+console.log(key);// ['waganor','bmw']
+console.log(typeof key); //object
+console.log(Array.isArray(key));// true
+
+note: key will return in array form.
+
+
+=> Object.value()
+
+let car={
+    waganor:200,
+    bmw:300
+}
+var value=Object.values(car);
+console.log(value); // [200,300]
+console.log(typeof value); // object
+console.log(Array.isArray(value)); // true
+
+=>Object.entries()
+
+let car={
+    waganor:200,
+    bmw:300
+}
+var entry=Object.entries(car);
+console.log(entry);
+console.log(typeof entry);
+console.log(Array.isArray(entry)); //array inside array
+
+o/p:
+	[ [ 'waganor', 200 ], [ 'bmw', 300 ] ]
+	object
+	true
+
+
++++++++++++++++++++
+Objects
+++++++++++++++++++
+ we can create object in three ways
+1. object literals:
+
+	let car={
+    	waganor:200,
+    	bmw:300
+	};
+	or
+	let car={waganor:200,bmw:200};
+
+2.By creating instance of object directly
+	var car= new Object();
+	car.waganor=200;
+	car.bmw=300;
+
+3. By using object contructor
+ function car(waganor,bmw){
+	this.waganor=waganor;
+	this.bmw=bmw;
+}
+const c= new car(100,200);
+console.log(c);
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+NON- primitive data type, value vs Refrence type
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1. Array
+2. Object
+3. Set
+4. Map
+
++++++++++++++++++++++++++++++++
+Set: set does not allow duplicate Value
+let set= new Set();
+set.add(1);
+set.add(2);
+set.add(3);
+set.add(1);
+console.log(set);
+
+o/p: Set(3) { 1, 2, 3 }
+
+=> In javaScript set is unorder collection of unique value. it is collection of objects that connot contain duplicate value. the set objects let us store unique value of any type, whether primitive value or object refrence.
+
+=> set method:
+
+	1. add(): add specific value to set
+	
+		let set= new Set();
+		set.add({name:"suman"}); // we can also add object to set
+		set.add({name:"aman"})
+		set.add(2)
+	2.delete(): remove specific value from set
+		let set= new Set();
+		set.add(2)
+		set.delete(2);
+	3. clear(): remove all element from set
+
+		let set= new Set();
+		set.add(2)
+		set.clear();
+	4. entries: return an iterrable of all the key/value pair in set, that contain a array of [value,value] for each elemnt in set object in insertion 		order.
+		console.log("Welcome to Programiz!");
+		let set= new Set();
+		set.add("apple");
+		set.add({apple:"fruits"});
+		console.log(set.entries(set)); // return array of object
+		o/p:[Set Entries] {[ 'apple', 'apple' ],[ { apple: 'fruits' }, { apple: 'fruits' } ]
+	5. For each loop take call back function
+		let set= new Set();
+		set.add(3);
+		set.add(4);
+ 		let mul=function  (value1,value2){
+    			console.log(`data[${value1}]: data[${value2*2}]`);
+		}
+		set.forEach(mul);// calback function
+	6. keys(): return an iterable of all the key in the set; the keys() method is exactly the same as the value() method.
+		let set= new Set();
+		set.add(3);
+		set.add(4);
+		var key=set.keys();
+		console.log(key);
+
+		o/p:[Set Iterator] { 3, 4 }
+	7. has(): return true if the set contains the specific value, false otherwise
+		let set= new Set();
+		set.add(3);
+		set.add(4);
+		console.log(set.has(3)); // true
+
+=> Create Set from array and array from set
+	1. creating set from array
+		let arr=Array("apple","mango");
+		let set= new Set(arr);
+		console.log(set);
+		o/p: Set(2) { 'apple', 'mango' }
+
+	2. creating array from set
+		let set= new Set();
+		set.add(3);
+		set.add(4);
+		var arr= Array.from(set);
+		console.log(arr);
+		o/p: [ 3, 4 ]
+
+
+
+	
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Map: Map is javascript object that reperesent a collection of  key-value pairs, similar to objects.
+-> However map can have key of any data type, including object or function
+->map maintain the insertion order of element and provide methods to add, remove , and retrive
+
+const map= new Map();
+map.set("white","#ffff");
+console.log(map);
+o/p:Map(1) { 'white' => '#ffff' }
+
+Importance of Map:
+	->implementing hashtable
+	->creating dictonary
+	->creating a lookup table
+
+Map methods:
+
+	1. set(): add new key value pair to Map
+	2. clear(): remove all key-value pair from the Map.
+	3. delete(): remove key-value pair from Map and as a argument we pass key to delete.
+		let map= new Map();
+		map.set(1,"aman");
+		map.set(2,"suman");
+		map.set(3,"nikhil");
+		map.delete(1);
+		console.log(map);
+		o/p: Map(2) { 2 => 'suman', 3 => 'nikhil' }
+
+	4.forEach: execute a callback function for each key-value pair in the Map
+		let map= new Map();
+		map.set(1,"aman");
+		map.set(2,"suman");
+		map.set(3,"nikhil");
+
+		var result=function(value,key){
+    			console.log(`${value}:${key}`);
+		}
+		map.forEach(result);
+		op: aman:1
+		   suman:2
+		   nikhil:3
+
+	5. entries(): Return iterator object that iterates over the key-value pair in Map
+		let map= new Map();
+		map.set(1,"aman");
+		map.set(2,"suman");
+		map.set(3,"nikhil");
+
+		var ent= map.entries();
+		console.log(ent);
+		o/p: [Map Entries] { [ 1, 'aman' ], [ 2, 'suman' ], [ 3, 'nikhil' ] }
+
+	6. get(): return value associated with key
+		let map= new Map();
+		map.set(1,"aman");
+		map.set(2,"suman");
+		map.set(3,"nikhil");
+
+		var ent= map.get(1);
+		console.log(ent);
+		o/p: aman
+	7. has(): return boolean indicating whether element with specified key persent or not.
+		map.has(1);// true
+	8. values(): return an iterator object that iterates over the value in the Map
+		let map= new Map();
+		map.set(1,"aman");
+		map.set(2,"suman");
+		map.set(3,"nikhil");
+		var result=map.values();
+		console.log(result);
+		o/p: [Map Iterator] { 'aman', 'suman', 'nikhil' }
+
+	9. keys(): return an iterator object that iterates over the keys in tha Map
+		map.keys();
+ 		o/p: [Map Iterator] { 1, 2, 3 }
+
+=> Create Map from the object and vice versa
+	1. creating map from object
+		let user is object
+		var map= new Map(user);
+	2. creating object from map
+		var result=Object.fromEntries(map);
+
+
+++++++++++++++++++++++++++
+Math
+++++++++++++++++++++++++++
+in javascript Math is an object with data properties and methods for processing numbers. it provide a range of mathmatical functionalities.
+ 1. Math.pI
+2. Math.SQRT2
+3. Math.LN10
+4. Math.abs(-19)
+5. Math.celi(19.6) // 20
+6. Math.exp(2)
+7. Math.sqrt(4) // 2
+8. Math.round(44.3)//44
+9. Math.random() // float value b/t 0 to 1
+10 Math.min()
+11 Math.max()
+12 Math.floor(4.55) // 4
+
++++++++++++++++++++++++
+String
+++++++++++++++++++++++
+String is object with a sequence of character enclosed in single or double quotes used to repersents .
+-> String is immutable
+-> if we do change in stainf value new object will craete.
+
+eg:
+var name="sachin";
+var fullname=name.concat("tendulkar"); // a new string will create
+
+=> name.length // 6
+
+=> String methods
+	1. cahrAt();
+	2. concat();
+	3. endsWith();
+	4. includes();
+	5. indexOf();
+	6. padEnd();
+	7. padStart();
+	8. repeat();
+	9. replaceAll();
+	10. search();
+	11. slice();
+	12. split();
+	13. startswith();
+	14. subString();
+	15. toLowerCase();
+	16. toUpperCase();
+	17. trim();
+	18. trimEnd();
+	19. trimStart();
+
+
++++++++++++++++++++++
+Date
+++++++++++++++++++++++
+
+let date= new Date();
+console.log(date);// 2023-05-30T11:35:26:252Z
+
+=> method in date
+1. now()
+2. getDate()
+3. getDay()
+4. getFullYear()
+5. getHours()
+6. getMilliseconds()
+7. getMinutes()
+8. getMonth()
+9.getTime()
+10. setDate()
+11. setMonth()
+12. setFullYear()
+13 toDateString()
+
+++++++++++++++++++++++
+Dom selector
+++++++++++++++++++++++
+
+Methods of Dom
+documents=> dom is object version of our html , provide by java script, method in object is getelementById..
+
+-> console.dir(document.all)// return collection of object all dom
+-> console.dir(document)
+->console.dir(document.url)
+->console.dir(document.body) // return body object of dom
+-> console.dir(document[5])
+
+1. getElementById(): the mehod searches for an element with the specific ID with in entrie document and return the element if found. If no element with                  	given ID is found, it will return null.
+
+-> index.html
+	<h1 class"title" id="title"> hdgdh </h1>
+
+-> script.js
+	const title=document.getElemetById("title")
+	const description=document.getElementById("description")
+	console.log("title",title)
+	console.log("description", description)
+-> console
+	tilte > <h1 id="title>
+	description null
+
+2. getElementByClassName(): it is method in javascript function used to retrive a collection of element in a document that has a specific class.
+
+-> index.html
+	<h1 class="title" id="title">
+		Lorem
+	</h1>
+	<p class="paragraph"> hfjfj </p>
+	<p class="paragraph"> kdoij </p>
+-> script.js
+	const paragraph=document.getElementByClassName("paragraph");
+	console.log(paragraph")
+
+-> console:
+	HTMLCollection {0:p.paragraph,1: p.paragraph}
+
+3. getElementByTagname(): method in javascript function to retrive a collection of element in adocument that has a specific tag name
+
+-> console:
+	HTMLCollection {0:p.paragraph,1: p.paragraph}
+
+4. querySelectors(): it is method that return first element that matches the specified selector. it take css selector as a parameter and return the first
+			matching element, if not found return null.
+
+-> index.html
+	<h1 class="title" id="title">
+		Lorem
+	</h1>
+	<p class="paragraph"> hfjfj </p>
+	<p class="paragraph"> kdoij </p>
+
+-> script.js
+	const paragraph=document.querySelctor("p");
+	const selectById=document.querySelctor("title");
+	console.log(paragraph")
+-> console
+	pragraph: > <p calss="pragraph">
+
+5. querySelectorAll(): it is method that searches for all element that matches the given css selector and return a static NodeList. if no element matches
+			, it will return empty NodeList.
+
+
+	-> console ptag > NodeList [p,p]
+
+++++++++++++++++++++++++++
+
+
++++++++++++++++++++++++++
+
+=> for each loop take callback function, for call back function we passed arrow function
+eg:
+	var arr=Array(1,2,3,4);
+	arr.forEach((element,index,arr)=>{
+    	console.log(element,index,arr);
+    
+	})
+	op:1 
+		0 [ 1, 2, 3, 4 ]
+		2 1 [ 1, 2, 3, 4 ]
+		3 2 [ 1, 2, 3, 4 ]
+		4 3 [ 1, 2, 3, 4 ]
+eg:
+	var result= function(ele,index,arr){
+    		console.log(ele,index,arr);
+	}
+	arr.forEach(result);
+
+=> setInterval(): hello method will run after every 10000ms
+   function setInterval(handler: TimerHandler, timeout?: number, ...arguments: any[]): number
+eg::    var hello=function(){
+    		console.log("hello");
+	}
+ 	setInterval(hello,10000);
+eg::    setInterval(()=>console.log("Hello"));
+
+=> setTimeout():it  will execute arrow function after 1000 ms only one time
+eg:  setTimeout(()=>console.log("suman"),1000);
+
+=> map(): A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+		Calls a defined callback function on each element of an array, and returns an array that contains the results.
+	ReadonlyArray.map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[]
+
+	eg: var arr=Array(1,2,3,4);
+	    arr.map((ele,index)=>console.log(ele,index,arr));
+
+=> filter():A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
+	    Returns the elements of an array that meet the condition specified in a callback function.
+	->(method) Array<number>.filter<S>(predicate: (value: number, index: number, array: number[]) => value is S, thisArg?: any): S[] (+1 overload)
+
+	eg:var arr=Array(1,2,3,4);
+	   var result=arr.filter((ele)=>{
+    		return ele%2==0;
+	   })
+	   console.log(result);
+
+=> reduce():Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and 	    is provided as an argument in the next call to the callback function.
+
+           ->@param callbackfn — A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in       	     the array.
+
+	   ->@param initialValue — If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn 	     function provides this value as an argument instead of an array value.
+           ->(method) Array<number>.reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number):   	      number (+2  overloads)
+
+
+
+	
+
+	
+
+
+
+	
+	
+
+
+
+	
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+	
