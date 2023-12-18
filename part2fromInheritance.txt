@@ -1,0 +1,2278 @@
+Inheritance in java
++++++++++++++++++++++
+=> it refer to process of linking 2 Classess.
+=> In java inheritance can be provided in 2 ways
+	a. Is-A relationship
+        b. Has-A relationship
+=>Is-A relationship refer to inheritance
+
+Q) what is inheritance?
+   It refer to process of acquiring properties from parent to child
+
+=> What is benifits of inheritance?
+	-> Re-Usability
+=> use extends keyword for inheritance.
+
+=> in child class two method is there 1.) inherited method 2.)Non inherited(Specialized method)
+
+eg:
+  import java.io.*;
+
+class Parent{ // Base class,Super class
+    public void method1(){
+        System.out.println("parent class method 1");
+    }
+}
+
+class Child extends Parent{ //Derived class, sub class
+    public void method2(){
+        System.out.println("child class method2");
+    }
+    
+}
+
+class GFG {
+ 	public static void main (String[] args) {
+// 		Child ref= new Parent();// CE
+// 		ref.method1(); // incompatible types: Parent cannot be converted to Child
+// 		ref.method2();// CE:parent cant be converted to child
+
+        // Parent ref= new Child();
+        // ref.method2(); // can't finf symbol method2() in parent
+		
+	}
+}
+
+Note: Whenever the parent class has under public categories , by default will be avalable to child class.
+      Whatever the child class has under public category, by default won't avalable to parent class.
+      Using parent class refrence  we can make call to the only parent class method, but not the child class specialized method.
+      Paent class refrence can be used to collect child class object. but by using parent class refrence we can call only parent
+      class method, but not child class specialized method. 
+      child class refrence can't we used to hold parent class objects.
+
+class Objets{
+	publiv native int hashCode();
+	Protected native java.lang.Object clone() throw java.lang.ClassNotSupportedException;
+	
+	// toString() gets called automatically when we print the refrence of the object[ callback method/magic method]
+	public java.lang.String tostring(); 
+	
+	//used while working with String,StringBuilder,StringBuffer
+	public boolean equals(Object obj);
+	// method related to Garbage collector
+	protected void  finalize() throws java.lang.Throwable
+
+	
+	// method related to MultiThreading
+        public final native void notify();
+	public final native void notifyAll();
+	public final void wait() throw java.lang.InterruptedException;
+	public final void wait(int time) throw java.lang.InterruptedException
+	public final void wait(long time) throw java.lang.InterruptedException.
+}
+
+class String extends Object{
+	// String class specified methods
+	@Override
+	public String toString(){
+		// print the content of the string
+	}
+
+}
+
+class StringBuilder extends Object{
+	//StringBuilder class specified methods
+	@Override
+	public String toString(){
+		// print the content of the string
+	}
+
+}
+
+class StringBuffer extends Object{
+	//StringBuffer calss specified methods
+	@Override
+	public String toString(){
+		// print the content of the string
+	}
+
+}
+
+o/p: Student@76ed5528
+     Aman
+
+note:
+1. For all java classes, the most comman required functionality is defined inside object class so objects is called "root" for all
+   java classes.
+2. For all java exception and error, the most common required functionality is define insdie "Throwable" class, so Throwable classes acts
+    as root for "Exception Hierarchy".
+3.For compiler and jvm by default all classes avalable in a package/folder called "java.lang" will avalable.(eg. toString in Object)
+4. whan we will print object ref then by default jvm and compiler called tostring() form Object class to print refrence/hashcode.
+
+eg:
+import java.io.*;
+
+class Student{
+    String name;
+    int roll;
+    public Student(String name,int roll){
+        this.name=name;
+        this.roll=roll;
+        
+    }
+    
+}
+
+class GFG {
+ 	public static void main (String[] args) {
+
+
+        Student ref= new Student("Suman Kumar",34);
+        System.out.println(ref);//called toString method from Object class to print hashCode
+        
+        String name= new String("Aman");
+        System.out.println(name);// call toString() method from String class that overide toString method of Object class
+		
+	}
+}
+
+=>
+
+eg:
+class Parent{
+    // zero argument constructor
+    public Parent(){
+        System.out.println("parent class constructor");
+        
+    }
+    public void method1(){
+        System.out.println("parent class method 1");
+    }
+}
+
+class Child extends Parent{
+    Child(){
+        System.out.println("child constructor");
+    }
+    public void method2(){
+        System.out.println("child class method2");
+    }
+    
+}
+
+class GFG {
+ 	public static void main (String[] args) {
+ 		Child c= new Child();// child and parent both class contructor will be called
+
+        Parent p= new Parent(); // only parent class contructor will be called
+		
+	}
+}
+o/p:
+parent class constructor
+child constructor
+parent class constructor
+
+++++++++++++++++++++++++++++++
+
+=> super keyword: to avoid name clash b\t parent calss and child class instance variable
+=> super method call: to make call parent class constructor
+=> this keyword: resolve shadowing proplem in construcor, avoid name clash b/t local variable and instance variable
+=> this method call: constructor chaining
+=> constructor overloading:
+
+eg:
+class Parent{
+    Parent(){
+        System.out.println(1);
+    }
+    Parent(int x){
+        this();
+        System.out.println(2);
+    }
+}
+class Child extends Parent{
+    Child(){
+        super(6);
+        System.out.println(3);
+    }
+    Child(int y){
+        this();
+        System.out.println(4);
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+		Child d= new Child(5);
+	
+	}
+}
+o/p:
+1
+2
+3
+4
+
+
+
+
+Conclusion of this() vs super():
++++++++++++++++++++++++++++++++++++
+Case1: we have to take super() or this() in the first line of the contructor, if we take anywhere else it would result in    	compilrtimeeeror.
+
+Case2: we cant use super() or this() both simuntaneously
+
+eg1 :
+class Demo{
+    Demo(){
+        this(10);
+        super();
+    }
+    Demo(int i){
+        System.out.println("Inside-one arg constructor");
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+		Demo d= new Demo();
+	
+	}
+}
+o/p: error: call to super must be first statement in constructor
+        super();
+
+eg2:
+import java.io.*;
+class Demo{
+    Demo(){
+        super();
+        this(10);
+        
+    }
+    Demo(int i){
+        System.out.println("Inside-one arg constructor");
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+		Demo d= new Demo();
+	
+	}
+}
+o/p:error: call to this must be first statement in constructor this(10);
+
+
+Case3: supr() or this() always be the first statement inside the constructor, if use inside method we will get CE.
+
+Q1)  when we are creating an object of the child class then automatically parent class object will be created ?
+	ans: NO, only child class object will be created .
+
+eg::1
+class Parent{
+    Parent(){
+        System.out.println(this.hashCode());
+    }
+}
+class Child extends Parent{
+    Child(){
+        System.out.println(this.hashCode());
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+		Child d= new Child();
+	
+	}
+}
+o/p:746292446
+    746292446
+
+Q2) whenever we are creating an object of child class, parent class contructor called ?
+	 Ans: yes, it cclled to take the properties of parent class in child class
+
+
+
+
+
+
+overriding
++++++++++++++
+Whatever th parent has by default avalable to the child class through inheritance. if the child is not satisfied method with implementation then child class is allowed to redifine the parent class method in the class it its own way this process is called 
+as "overriding".
+
+In java polymorphism is one of the pillar of opps
+
+we have 2 type of polymorphism
+a. Compiletimebinding/EarlyBinding/staticbinding
+b. Runtime/dynamic/latebinding
+
+In case of Overriding jvm will play a vital role of binding the method called to method body, so we can say overriding as runtime polymorphism.
+In case of overriding compiler will just check the refrence type and see whether the methods signature persent in the class or not.
+
+diffn b/t method Overriding and overLoading
+++++++++++++++++++++++++++++++++++++++++++++++
+overloading: line of code would be more and compiler will play a major role of binding the method call based on the refrence type.
+
+overloading
+++++++++++
+
+import java.io.*;
+
+class Animal{
+    // zero argument constructor
+    public void eat(){
+        System.out.println("animal is eating");
+        
+    }
+    public void sleep(){
+        System.out.println("animal is sleeping");
+    }
+    public void breathe(){
+        System.out.println("animal is breathing");
+    }
+}
+
+class Tiger extends Animal{
+    @Override
+    public void eat(){
+        System.out.println("tiger hunt and eat");
+    }
+}
+
+class Deer extends Animal{
+    @Override
+    public void eat(){
+        System.out.println("dear will graze and eat");
+    }
+}
+
+class Monkey extends Animal{
+    // informing compiler about overidden method
+    @Override
+    public void eat(){
+        System.out.println("monkey steal and eat");
+    }
+}
+
+// from this class our code will Run
+// helper claas
+class Forest{
+    // method overloading false polymorphism
+    public void allowAnimal(Tiger tiger){
+        tiger.eat();
+        tiger.sleep();
+        tiger.breathe();
+    }
+    
+    public void allowAnimal(Deer deer){
+        deer.eat();
+        deer.sleep();
+        deer.breathe();
+    }
+    
+    public void allowAnimal(Monkey monkey){
+        monkey.eat();
+        monkey.sleep();
+        monkey.breathe();
+    }
+    
+}
+
+class GFG {
+ 	public static void main (String[] args) {
+ 	    Tiger t=new Tiger();
+ 	    Deer d= new Deer();
+ 	    Monkey m= new Monkey();
+ 	    Forest f= new Forest();
+ 	    f.allowAnimal(t);
+ 	    f.allowAnimal(d);
+ 	    f.allowAnimal(m);
+ 		
+		
+	}
+}
+
+o/p: tiger hunt and eat
+     animal is sleeping
+     animal is breathing
+     dear will graze and eat
+     animal is sleeping
+     animal is breathing
+     monkey steal and eat
+     animal is sleeping
+     animal is breathing
+
+overriding
++++++++++++++
+In case of overriding lines of code would be less, but because of jvm playing a role the action will performed based on the runtime object.
+
+import java.io.*;
+
+class Animal{
+    // zero argument constructor
+    public void eat(){
+        System.out.println("animal is eating");
+        
+    }
+    public void sleep(){
+        System.out.println("animal is sleeping");
+    }
+    public void breathe(){
+        System.out.println("animal is breathing");
+    }
+}
+
+class Tiger extends Animal{
+    @Override
+    public void eat(){
+        System.out.println("tiger hunt and eat");
+    }
+}
+
+class Deer extends Animal{
+    @Override
+    public void eat(){
+        System.out.println("dear will graze and eat");
+    }
+}
+
+class Monkey extends Animal{
+    // informing compiler about overidden method
+    @Override
+    public void eat(){
+        System.out.println("monkey steal and eat");
+    }
+}
+
+// from this class our code will Run
+// helper claas
+class Forest{
+    // runtime polymorphism [1:Multiple object] , true polymorphism
+    /*
+                    =new Tiger();
+        Animal ref  = new Deer();
+                    = new Monkey();
+    */
+    public void allowAnimal(Animal ref){
+        ref.eat();
+        ref.sleep();
+        ref.breathe();
+    }
+    
+    
+    
+}
+
+class GFG {
+ 	public static void main (String[] args) {
+ 	    Tiger t=new Tiger();
+ 	    Deer d= new Deer();
+ 	    Monkey m= new Monkey();
+ 	    Forest f= new Forest();
+ 	    f.allowAnimal(t);
+ 	    f.allowAnimal(d);
+ 	    f.allowAnimal(m);
+ 		
+		
+	}
+}
+o/p:
+
+tiger hunt and eat
+animal is sleeping
+animal is breathing
+dear will graze and eat
+animal is sleeping
+animal is breathing
+monkey steal and eat
+animal is sleeping
+animal is breathing
+
+True Ploymorphism
++++++++++++++++++++
+changing the implementation i good as per the needs, but having specialized method without the knowledge of a parent is not good practice.
+
+ Rule of polymorphism
++++++++++++++++++++++++
+MethodSignature: methodname(paramList..)
+
+rule1=> In case of methodOveriding, method signature should be same in child class while overriding.
+        it is possible to chnage the return type also if it is of refrence type[relationship should be parent to child]
+        if the return type is primitive type, then we can't chnage the return type, if we try to change we get "CE".
+eg::
+
+import java.io.*;
+
+class Parent{
+    public Object m1(){
+        return null;
+    }
+}
+class Child extends Parent{
+    @Override
+    public String m1(){
+        return "suman";
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+	    Parent p=new Child();
+	    System.out.println(p.m1());
+	}
+}
+o/p: suman
+
+Rule2: private method are not visible is child class, so Overrriding them in the child class is not possible.
+
+eg::
+class Parent{
+    public Object m1(){
+        return null;
+    }
+}
+class Child extends Parent{
+    @Override
+    private String m1(){
+        return "suman";
+    }
+}
+
+o/p: CE
+
+Rule3: parent class final method can't be changed to non-final in child class during overriding
+       parent class non final method can be made final in child class during overriding.
+
+eg::
+class Parent{
+    public final Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    @Override
+    public String m1(){
+        return "suman";
+    }
+}
+o/p:CE
+
+eg::
+class Parent{
+    public Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    @Override
+    public final String m1(){
+        return "suman";
+    }
+}
+
+
+note:
+final access modifier applied to 
+class: these class won't participate in inhertance
+method: these methos implementation can't be changed, but it will inherited to child class.
+variable: it would be treated as compile time constant whose value should not be changed during the execution.
+
+eg::
+final class Parent{
+    public Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    @Override
+    public  String m1(){
+        return "suman";
+    }
+}
+
+Rule 4:
+In case of overriding, we can increase the privilege of the access modifier, if we try to decrease it would result comiletime error
+
+	|    private
+	|    default
+	|    protected
+	|    public
+	|
+   decreasing coming to down
+
+eg::
+class  Parent{
+    public Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    @Override
+    protected  String m1(){
+        return "suman";
+    }
+}
+
+o/p:CE weaker acess modifier
+
+eg2::
+class  Parent{
+    protected Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    @Override
+    public  String m1(){
+        return "suman";
+    }
+}
+o/p: suman
+
+note:
+a. parent class public:: then child class should be public child class
+b. parent class protected then child classs should be protected/public
+c. parent class is default then child class should be default/protected/public
+d. parent class private then overriding concept not applicable.
+
+overriding with static methods
++++++++++++++++++++++++++++++++++
+Rule1: we cant override satic method as non static
+
+eg1:
+class  Parent{
+    public static Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    @Override
+    public  String m1(){
+        return "suman";
+    }
+}
+o/p: CE
+
+Rule2: non static method can't be static
+
+eg::
+class  Parent{
+    public Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    @Override
+    public static  String m1(){
+        return "suman";
+    }
+}
+o/p: CE
+
+Rule3: Static method can't be overriden is called method hiding
+
+eg:
+class  Parent{
+    public static Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    @Override
+    public static  String m1(){
+        return "suman";
+    }
+}
+o/p: CE
+
+MethodHiding
+++++++++++++++
+in case of static method , we assume the child class method is overhidden, but reality is it not overriden where as it would "MethodHidden", where compiler will bind the method calls based on refrence type. 
+-> child class method hided
+
+eg::
+class  Parent{
+    public static Object m1(){
+        return null;
+    }
+}
+
+class Child extends Parent{
+    public static  String m1(){
+        return "suman";
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+	    Parent p=new Child();
+	    System.out.println(p.m1());
+	}
+}
+o/p: null
+
+Difference b/t methodhidding and methodoverloading
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+MethodHiding:
+	a. both parent and child class method should be static.
+	b. Method resolution will be taken care by compiler based on the refrence type.
+	c. Method hiding is consider as static binding or early binding
+
+MethodOveriding:
+	a. both parent and child class method should ne non static.
+	b. Method resolution be taken care by jvm based on the refrence type
+	c. Method overriding is consider as runtime bindig/ late binding.
+
+
+Overriding w.r.t var-args method
+++++++++++++++++++++++++++++++++++++
+A var-args method should be overriden as "var-args" method only. if we try to override with normal method then it would become 
+overloading but not overriding
+
+class  Parent{
+    public void  m1(int... i){
+        System.out.println("from parent");
+    }
+}
+
+class Child extends Parent{
+    public void m1(int i){
+        System.out.println("from child");
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+	    Parent p1= new Parent();
+	    p1.m1(10); // parent
+	    System.out.println("++++++++++++++");
+	    Child c1= new Child();
+	    c1.m1(10); // child
+	    System.out.println("++++++++++++++");
+	    Parent p=new Child();
+	    p.m1(10); // parent
+	}
+}
+
+o/p:
+from parent
+++++++++++++++
+from child
+++++++++++++++
+from parent
+
+-> overriding eg:
+class  Parent{
+    public void  m1(int... i){
+        System.out.println("from parent");
+    }
+}
+
+class Child extends Parent{
+    @Override
+    public void m1(int... i){
+        System.out.println("from child");
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+	    Parent p1= new Parent();
+	    p1.m1(10);// parent
+	    System.out.println("++++++++++++++");
+	    Child c1= new Child();
+	    c1.m1(10); // child
+	    System.out.println("++++++++++++++");
+	    Parent p=new Child();
+	    p.m1(10); // child
+	}
+}
+
+o/p:
+from parent
+++++++++++++++
+from child
+++++++++++++++
+from child
+
+Overriding w.r.t variable
+++++++++++++++++++++++++++
+=> overloading is not applicable for variable.
+=> variable is resolution is always taken care by compiler based on refrence type.
+eg::
+class  Parent{
+   int x=100;
+}
+
+class Child extends Parent{
+    int x=99;
+}
+
+class GFG {
+	public static void main (String[] args) {
+	    Parent p1= new Parent();
+	    System.out.println(p1.x); // 100 , call based on ref type
+	    Child c1= new Child();
+	    System.out.println(c1.x); // 99
+	    Parent p=new Child();
+	    System.out.println(p.x); // 100
+	}
+}
+
+instance control flow in parent to child realtionship
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Rule: when ever we are creating an object of child class the following sequence of event will take place
+a. identification of instance variable from parrent to child
+b. Execution of instance variable assignament and instance block only in parent class.
+d. Excution of instance variable assignment and instance block only in child class
+e. Execution of child class constructor
+
+
+	
+
+access modifier
++++++++++++++++++
+
+private << default << protected << public
+
+type of inheritance
+++++++++++++++++++++++
+1.Multiple inheritance: Not sopportable because of ambiguity in java through "classes".
+2.Multilevel inheritance: getting properties form parent to child in hierarchical way is refred as "Multilevel" Inheritance
+3.Cyclic inheritance: Not supported by java because of constructor invoking in loop.
+
+
+eg:: 1
+class Parent {
+    public void m1(){
+        System.out.println("parent");
+    }
+    
+}
+class Parent1 {
+    public void m1(){
+        System.out.println("Parent1");
+    }
+    
+}
+
+// class Child extends Parent, Parent1 {
+    
+// }
+
+class GFG extends Parent1,Parent {
+	public static void main (String[] args) {
+		GFG d= new GFG();
+		d.m1();
+	
+	}
+}
+
+o/p:CE
+
+eg3:
+class Parent extends Child{
+    Parent(){
+        super();
+    }
+    
+}
+class Child extends Parent{
+    Child(){
+        super();
+    }
+    
+}
+
+class GFG {
+	public static void main (String[] args) {
+		Child d= new Child();
+	
+	}
+}
+o/p: error: cyclic inheritance involving Parent class Parent extends Child
+
+static control flow in inheritance
++++++++++++++++++++++++++++++++++++++
+whenwever ae are executing child class the following suquence  of event take place
+a. Identication of static members from parent to child .
+b. Execution of static variable assignment and static block execution from parent to child
+c. Execution of child main()
+
+eg::
+class Base {
+    1 static int i=10;
+    2 static{ 11
+        methodOne();
+        System.out.println("Base static block");
+    }
+    
+    3 public static void main (String[] args) {
+		methodOne(); 12
+		System.out.println("base main");
+	
+	}
+
+    4 static void methodOne(){
+        System.out.println(j); 13
+    }
+    5 static int j=20; 14
+    
+}
+
+
+class Derived  extends Base{
+    6 static int x=100; 15
+    7 static{
+        methodTwo(); 16
+        System.out.println("Derived static static block");
+    }
+    
+    8 public static void main (String[] args) {
+		methodTwo();19
+		System.out.println("Derived  main"); 20
+	
+	}
+
+    9 static void methodTwo(){
+        System.out.println(y); 17
+    }
+    10 static int y=200; 18
+
+    
+}
+
+class GFG extends Parent1,Parent {
+	public static void main (String[] args) {
+		GFG d= new GFG();
+		d.m1();
+	
+	}
+}
+
+what is tight coupling
+++++++++++++++++++++++++
+
+abstract class
++++++++++++++++++
+=> if we don't want to be object to be created then for such class we mark as "abstract"
+=> abstract sccess modifier is applicable at
+	a. class level: prevent object creation
+	b. method level: prevent giving the implementation for body of a method
+	c. variable level: not applicable at variable level.
+=> through abstract  keyword we can promote "abstraction"
+=> By referring to abstract class, we would get to know only the service name(method name), but not the internal implementation given by 
+   developer, this mechanism we called is abstraction.
+=> for abstract class, instantatiation is not possible, but we can create refrence for an "abstarct" class
+=> if a class contain one class as abstract method we have make class as abstract class. 
+
+
+eg::1
+
+abstract class Plane{
+    // abstract method without implemetation
+    // class is incomplete, so marked in complete using abstract access modifier in class , so anyone can't create object 
+    // of that incomplete class
+    public abstract void takeOff();
+    
+    public abstract void fly();
+    
+    public abstract void land();
+    
+    public abstract void carry();
+    
+}
+
+class Passenger extends Plane{
+    
+    @Override
+    public  void takeOff(){
+        System.out.println("Passenegr plane take off");
+    }
+    
+    @Override
+    public void fly(){
+        System.out.println("Passenegr plan is flying");
+        
+    }
+    
+    @Override
+    public  void land(){
+        System.out.println("passenegr plane is landing");
+        
+    }
+    
+    @Override
+    public void carry(){
+        System.out.println("pasenger plane is carrying");
+        
+    }
+    
+}
+
+class Airpot{
+    // helper class
+    // MethodOverriding : Trueploymorphism => Losse coupling
+    public void allowPlane(Plane plane){
+        plane.takeOff();
+        plane.carry();
+        plane.fly();
+        plane.land();
+        System.out.println();
+        
+    }
+    
+}
+
+class GFG {
+	public static void main (String[] args) {
+		// we can't craete object of Plane class because it is abstract class but we can create ref of Plane class.
+		Plane pass= new Passenger();
+		Airpot a= new Airpot();
+		a.allowPlane(pass);
+		
+	}
+}
+o/p:Passenegr plane take off
+    pasenger plane is carrying
+    Passenegr plan is flying
+    passenegr plane is landing
+
+
+
+Note:
+1. An abstarct class contains "concrete" method as well as abstract method
+2. During inheritance , concrete method can be overriden.
+3. To mark the class as "abstarct", we need to have atleast on abstract method.
+
+eg2:
+
+abstract class Plane{
+    // abstract method without implemetation
+    // class is incomplete, so marked in complete using abstract access modifier in class , so anyone can't create object 
+    // of that incomplete class
+    public abstract void takeOff();
+    
+    public abstract void fly();
+    
+    public abstract void land();
+    // abstract class
+    
+    public abstract void carry();
+    
+    // concrete method in abstract class
+    public void infoAboutPlane(){
+        System.out.println("Generic information");
+    }
+    
+}
+
+class Passenger extends Plane{
+    
+    @Override
+    public  void takeOff(){
+        System.out.println("Passenegr plane take off");
+    }
+    
+    @Override
+    public void fly(){
+        System.out.println("Passenegr plan is flying");
+        
+    }
+    
+    @Override
+    public  void land(){
+        System.out.println("passenegr plane is landing");
+        
+    }
+    
+    @Override
+    public void carry(){
+        System.out.println("pasenger plane is carrying");
+        
+    }
+    @Override
+    public void infoAboutPlane(){
+        System.out.println("Passenegr plane  information");
+    }
+    
+}
+
+class Airpot{
+    // helper class
+    // MethodOverriding : Trueploymorphism => Losse coupling
+    public void allowPlane(Plane plane){
+        plane.takeOff();
+        plane.carry();
+        plane.fly();
+        plane.land();
+        plane.infoAboutPlane();
+        System.out.println();
+        
+    }
+    
+}
+
+class GFG {
+	public static void main (String[] args) {
+		// we can't craete object of Plane class because it is abstract class but we can create ref of Plane class.
+		Plane pass= new Passenger();
+		Airpot a= new Airpot();
+		a.allowPlane(pass);
+		
+	}
+}
+o/p:Passenegr plane take off
+    pasenger plane is carrying
+    Passenegr plan is flying
+    passenegr plane is landing
+    Passenegr plane  information
+
+
+Note: Illegal combination of access modifier at method level
+	a. abstract and final -------> [illegal]
+	b. abstract and static------->[illegal]
+
+Question
+1. Does abstract class have constructor?
+ans. yes
+
+2. can we create object of abstract class?
+ans No
+
+3.if object can't created for an abstract class, then why we need a contructor?
+ ans: Even though we can't create object for abstract class, still constructor is required, because in inheritance the child class 
+      object will initalize by making a call to parent class constructor.
+      constructor in abstract class is required to initalize the object completely.
+
+eg:
+abstract class Person{
+    String name;
+    int age;
+    char gender;
+    
+    Person(String name, int age, char gender){
+        this.name=name;
+        this.age=age;
+        this.gender=gender;
+    }
+    public void dispDetails(){
+        System.out.println("name is :"  +name);
+        System.out.println("age is :"  +age);
+        System.out.println("gender is :"  +gender);
+    }
+}
+
+class Student extends Person{
+    int sid;
+    float avg;
+    
+    Student(String name, int age, char gender, int sid, float avg){
+        super(name,age,gender);
+        this.sid=sid;
+        this.avg=avg;
+    }
+    
+    public void dispDetails(){
+        super.dispDetails();
+        System.out.println("sid is :" +sid);
+        System.out.println("avg is :"+ avg);
+    }
+}
+
+class GFG {
+	public static void main (String[] args) {
+		Person p = new Student("suman",41,'M',12,57.7f);
+		p.dispDetails();
+	}
+}
+
+o/p:
+name is :suman
+age is :41
+gender is :M
+sid is :12
+avg is :57.7
+
+Q4) When we create object of child class, will be object of parent class also created?
+ans: NO, parent class constructor will execute to make the child class object completed.
+
+     
+Interface in java
+++++++++++++++++++++
+Definition1=> any service requirement specification is called interface.
+	eg: sun is responsible to define jdbc api and database vendor is responsible to provide implemetation to it.
+Definition2=> It refer to contract b/t client and service provider.
+
+Defination3=> Inside interface every method are bydefault public and abstarct.
+              => sice it is public and abstract , we say interface is pure abstract class.
+
+Encapsulation=> datahiding(private, geter and seeter) +abstraction(interface + abstarct class)
+
+
+Rules of Interface
+++++++++++++++++++
+case 1:
+ 1. Whenever we are implementing an interface, we need to give body for all the abstract methods present inside the
+    interface.If we fail to give body for all the methods present inside the interface, then we need to mark the class as "abstract".
+ 2. For an interface  instantiation(creation of object) is not possible.
+ 3. For an interface, creation of reference is possible.
+ 4. Through interface we achieve :: TruePolymorphism(Overriding).
+
+JDK1.7 Version : interface
+++++++++++++++++++++++++++
+//Pure-Abstract-class : SRS[Software Requirment Specification]
+interface ICalculator
+{
+	//By Default methods are :: public abstract
+	 void add(int a,int b);
+	 void sub(int a,int b);
+	 void mul(int a,int b);
+	 void div(int a,int b);
+}
+
+//Implemented class : concrete class
+class CalculatorImpl implements ICalculator
+{
+	@Override
+	public void add(int a,int b)
+	{
+		int sum = a+b;
+		System.out.println("The sum is :: "+sum);
+	}
+
+	@Override
+	public void sub(int a,int b)
+	{
+		int diff = a-b;
+		System.out.println("The sub is :: "+diff);
+	}
+
+	@Override
+	public void mul(int a,int b)
+	{
+		int res = a*b;
+		System.out.println("The res is :: "+res);
+	}
+
+	@Override
+	public void div(int a,int b)
+	{
+		int quotient = a/b;
+		System.out.println("The Quotient is :: "+quotient);
+	}
+}
+
+public class Test
+{
+	public static void main(String[] args) 
+	{	
+		//Creating a reference of interface
+		ICalculator calc;
+
+		calc = new CalculatorImpl();
+		
+		//Calling the method based on runtime object
+		calc.add(10,20);
+		calc.sub(20,10);
+		calc.mul(10,20);
+		calc.div(5,2);
+	}	
+}
+
+Output
+The sum is :: 30
+The sub is :: 10
+The res is :: 200
+The Quotient is :: 2
+
+
+
+Given
+1. public class KungFu {
+2. 	public static void main(String[] args) {
+3. 		Integer x = 400;
+4. 		Integer y = x;
+5. 		x++;
+6. 		StringBuilder sb1 = new StringBuilder("123");
+7. 		StringBuilder sb2 = sb1;
+8. 		sb1.append("5");
+9. 		System.out.println((x == y) + " " + (sb1 == sb2));
+10. 	}
+11.}
+
+What is the result?
+A. true true
+B. false true
+C. true false
+D. false false
+E. Compilation fails.
+F. An exception is thrown at runtime.
+
+Answer: B
+
+
+Case2: Whenever we are implementing an interface method compulsory, it should be declared as public otherwise we will get "CompileTime Error".
+
+//Pure-Abstract-class : SRS
+interface ICalculator
+{
+	//By Default methods are :: public abstract
+	 void add(int a,int b);
+	 void sub(int a,int b);
+}
+
+//Implemented class : concrete class
+class CalculatorImpl implements ICalculator
+{
+	@Override
+	void add(int a,int b)
+	{
+		int sum = a+b;
+		System.out.println("The sum is :: "+sum);
+	}
+
+	@Override
+	void sub(int a,int b)
+	{
+		int diff = a-b;
+		System.out.println("The sub is :: "+diff);
+	}
+}
+
+public class Test
+{
+	public static void main(String[] args) 
+	{	
+		//Creating a reference of interface
+		ICalculator calc;
+
+		calc = new CalculatorImpl();
+		
+		//Calling the method based on runtime object
+		calc.add(10,20);
+		calc.sub(20,10);
+	}	
+}
+
+Output
+	CE: attempting to assign weaker access privileges; was public
+
+
+case3: 
+ => Relationship b/w interface to class is always "implements".
+ => Relationship b/w interface to interface is always "extends".
+ => If we implemented the interface which has extended from one more interface, then as a programmer the implementation class should give
+    body for all the abstract methods present in the interface, if not we need to mark the class as "abstract", otherwise the code would result
+    in "CompileTime Error".
+
+eg#1.
+//Pure-Abstract-class : SRS
+interface ICalculator1
+{
+	//By Default methods are :: public abstract
+	 void add(int a,int b);
+	 void sub(int a,int b);
+}
+
+//Pure-Abstract-class : SRS
+interface ICalculator2 extends ICalculator1
+{
+	//By Default methods are :: public abstract
+	void mul(int a,int b);
+	void div(int a,int b);
+}
+
+//Implemented class : concrete class
+class CalculatorImpl implements ICalculator2
+{
+	@Override
+	public void add(int a,int b)
+	{
+		int sum = a+b;
+		System.out.println("The sum is :: "+sum);
+	}
+
+	@Override
+	public void sub(int a,int b)
+	{
+		int diff = a-b;
+		System.out.println("The sub is :: "+diff);
+	}
+
+	@Override
+	public void mul(int a,int b){
+		int res = a*b;
+		System.out.println("The res is :: "+res);
+	}
+
+	@Override
+	public void div(int a,int b){
+		int quotient = a/b;
+		System.out.println("The quotient is :: "+quotient);
+	}
+}
+
+public class Test
+{
+	public static void main(String[] args) 
+	{	
+		//Creating a reference of interface
+		ICalculator2 calc;
+
+		calc = new CalculatorImpl();
+		
+		//Calling the method based on runtime object
+		calc.add(10,20);
+		calc.sub(20,10);
+		calc.mul(10,20);
+		calc.div(5,2);
+	}	
+}
+Output
+The sum is :: 30
+The sub is :: 10
+The res is :: 200
+The quotient is :: 2
+
+
+case4: 
+ At a time one class can extend from how many classes?
+ Answer. One because java doesn't support multiple inheritance through class to avoid "Ambiguity problem".
+
+ At a time one class can implement how many interfaces?
+ Answer: Yes possible, so we can say mulitple inheritance is supported in java through "interfaces" and "Ambiguity problem " won't occur because
+         Compiler will keep the method signature in the implementation class only if it is not available.
+         As noticed in the below example   ICalculator1 and ICalculator2 both have void add(int a,int b) method,but compiler will keep only
+	 one method void add(int a,int b) in the implementation class through which "Ambiguity problem" will not occur in interfaces.
+
+ At a time can one class implement an interface and extends a class?
+ Answer: yes,but first we need to have extends and followed by implements.
+ 
+eg#1.
+//Pure-Abstract-class : SRS
+interface ICalculator1
+{
+	//By Default methods are :: public abstract
+	 void add(int a,int b);
+	 void sub(int a,int b);
+}
+
+//Pure-Abstract-class : SRS
+interface ICalculator2
+{
+	//By Default methods are :: public abstract
+	void mul(int a,int b);
+	void div(int a,int b);
+	void add(int a,int b);
+}
+
+//Implemented class : concrete class
+class CalculatorImpl implements ICalculator1,ICalculator2
+{
+	@Override
+	public void add(int a,int b)
+	{
+		int sum = a+b;
+		System.out.println("The sum is :: "+sum);
+	}
+
+	@Override
+	public void sub(int a,int b)
+	{
+		int diff = a-b;
+		System.out.println("The sub is :: "+diff);
+	}
+
+	@Override
+	public void mul(int a,int b){
+		int res = a*b;
+		System.out.println("The res is :: "+res);
+	}
+
+	@Override
+	public void div(int a,int b){
+		int quotient = a/b;
+		System.out.println("The quotient is :: "+quotient);
+	}
+}
+
+public class Test
+{
+	public static void main(String[] args) 
+	{	
+		//Creating a reference of interface
+		CalculatorImpl calc;
+
+		calc = new CalculatorImpl();
+		
+		//Calling the method based on runtime object
+		calc.add(10,20);
+		calc.sub(20,10);
+		calc.mul(10,20);
+		calc.div(5,2);
+	}	
+}
+
+Output
+The sum is :: 30
+The sub is :: 10
+The res is :: 200
+The quotient is :: 2
+
+To promote loose coupling we follow the rule of 
+	interface ->abstract class -> class
+
+//Pure-Abstract-class : SRS
+interface ICalculator1
+{
+	//By Default methods are :: public abstract
+	 void add(int a,int b);
+	 void sub(int a,int b);
+}
+
+//Pure-Abstract-class : SRS
+interface ICalculator2
+{
+	//By Default methods are :: public abstract
+	void mul(int a,int b);
+	void div(int a,int b);
+	void add(int a,int b);
+}
+
+abstract class Calculator implements ICalculator1,ICalculator2
+{
+	
+}
+
+//Implemented class : concrete class
+class CalculatorImpl extends Calculator
+{
+	@Override
+	public void add(int a,int b)
+	{
+		int sum = a+b;
+		System.out.println("The sum is :: "+sum);
+	}
+
+	@Override
+	public void sub(int a,int b)
+	{
+		int diff = a-b;
+		System.out.println("The sub is :: "+diff);
+	}
+
+	@Override
+	public void mul(int a,int b){
+		int res = a*b;
+		System.out.println("The res is :: "+res);
+	}
+
+	@Override
+	public void div(int a,int b){
+		int quotient = a/b;
+		System.out.println("The quotient is :: "+quotient);
+	}
+}
+
+public class Test
+{
+	public static void main(String[] args) 
+	{	
+		//Creating a reference of interface
+		Calculator calc;
+
+		calc = new CalculatorImpl();
+		
+		//Calling the method based on runtime object
+		calc.add(10,20);
+		calc.sub(20,10);
+		calc.mul(10,20);
+		calc.div(5,2);
+	}	
+}
+Output
+The sum is :: 30
+The sub is :: 10
+The res is :: 200
+The quotient is :: 2
+
+eg#2.
+interface ICalculator
+{
+	public void add(int a,int b);
+}
+
+class CalculatorDemo
+{
+	public void sub(int a,int b)
+	{
+		System.out.println("The sub is :: "+(a-b));
+	}
+}
+class CalculatorImpl extends CalculatorDemo implements ICalculator
+{
+	@Override
+	public void add(int a,int b){
+		System.out.println("The sum is :: "+(a+b));
+	}
+}
+
+public class Test
+{
+	public static void main(String[] args) 
+	{	
+			CalculatorImpl calc;
+			calc = new CalculatorImpl();
+			calc.add(10,20);
+			calc.sub(10,3);
+	}	
+}
+Output
+The sum is :: 30
+The sub is :: 7
+
+eg#3.
+interface ICalculator
+{
+	public void add(int a,int b);
+}
+
+class CalculatorDemo
+{
+	public void sub(int a,int b)
+	{
+		System.out.println("The sub is :: "+(a-b));
+	}
+}
+abstract class Calculator extends CalculatorDemo implements ICalculator
+{
+
+}
+
+class CalculatorImpl extends Calculator
+{
+	@Override
+	public void add(int a,int b){
+		System.out.println("The sum is :: "+(a+b));
+	}
+}
+
+public class Test
+{
+	public static void main(String[] args) 
+	{	
+			Calculator calc;
+
+			calc = new CalculatorImpl();
+
+			calc.add(10,20);
+			calc.sub(10,3);
+	}	
+}
+
+Output
+The sum is :: 30
+The sub is :: 7
+
+Which of the following is true?
+  a. A class can extend any no of class at a time.
+  b. An interface can extend only one interface at at time.
+  c. A class can implement only one interface at at a time.
+  d. A class can extend a class and can implement an interface but not both simultaneously.
+  e. An interface can implements any no of Interfaces at a time.
+  f. None of the above
+
+Answer: f
+
+Consider the expression X extends Y which of the possiblity of X and Y expression is true?
+   1. Both x and y should be classes.
+   2. Both x and y should be interfaces.
+   3. Both x and y can be classes or can be interfaces.
+   4. No restriction.
+Answer: 3
+
+Predict X,Y,Z
+  a. X extends Y,Z?
+  X,Y,Z => interface
+
+
+  b. X extends Y implements Z?
+	X,Y => class
+	Z   => interface
+	
+
+  c. X implements Y,Z?
+	X   => class
+	Y,Z => interface
+
+  d. X implements Y extends Z?
+	invalid case.
+
+Interface variables
++++++++++++++++++++
+  => Inside the interface we can define variables.
+  => Inside the interface variables is to define requirement level constants.
+  => Every variable present inside the interface is by default public static final.
+ 
+eg:: interface ISample
+     {
+		int x=10;
+     }
+     public :: To make it available for implementation class Object.
+     static :: To access it without using implementation class Name.
+     final  :: Implementation class can access the value without any modification.
+
+variable declaration inside interface
+  a. int x=10;
+  b. public int x=10;
+  c. static int x=10;
+  d. final  int x=10;
+  e. public static int x=10;
+  f. public final int x=10;
+  g. static final int x=10;
+  h. public static final int x=10;
+
+Answer: All are valid
+
+Note: 
+since the variable defined in interface is public static final,we cannot use modifiers like private,protected,transient,volatile.
+since the variable is static and final,compulsorily it should be initialized at the time of declaration otherwise it would 
+result in compile time error.
+
+eg:: interace IRemote{ int x;}// compile time error.
+
+interface IRemote
+{
+	//public static final
+	int MIN_VOLUME = 0;
+	int MAX_VOLUME = 100;
+}
+
+public class Test implements IRemote
+{
+	public static void main(String[] args) 
+	{	int MIN_VOLUME = -5;
+		System.out.println(MIN_VOLUME);
+		System.out.println(IRemote.MIN_VOLUME);
+		System.out.println(Test.MIN_VOLUME);
+	}	
+}
+Output
+-5
+0
+0
+
+eg#2.
+interface IRemote
+{
+	//public static final
+	int MIN_VOLUME = 0;
+	int MAX_VOLUME = 100;
+}
+
+public class Test implements IRemote
+{
+	public static void main(String[] args) 
+	{	MIN_VOLUME = -5;
+		System.out.println(MIN_VOLUME);
+		System.out.println(IRemote.MIN_VOLUME);
+		System.out.println(Test.MIN_VOLUME);
+	}	
+}
+Output
+CE: final variable value can't be modified.
+
+
+Interface Naming Conflicts
+==========================
+ Case 1::
+ If 2 interfaces contain a method with same signature and same return type in the implementation class only one method 
+ implementation is enough.
+
+eg#1.
+interface IRight
+{
+	public void methodOne();
+}
+interface ILeft
+{
+	public void methodOne();
+}
+
+public class Test implements ILeft,IRight
+{
+	@Override
+	public void methodOne()
+	{
+		System.out.println("Impl for MethodOne...");
+	}
+	public static void main(String[] args) 
+	{	
+		Test t =new Test();
+		t.methodOne();
+	}	
+}
+Output
+Impl for MethodOne...
+
+Case2:
+   If 2 interfaces contain a method with same name but different arguments in the implementation class we have to provide 
+   implementation for both methods and these methods acts as a Overload methods. 
+
+eg#1.
+interface IRight
+{
+	public void methodOne();
+}
+interface ILeft
+{
+	public void methodOne(int i);
+}
+
+public class Test implements ILeft,IRight
+{
+	@Override
+	public void methodOne()
+	{
+		System.out.println("Impl for MethodOne...");
+	}
+
+	@Override
+	public void methodOne(int i)
+	{
+		System.out.println("Impl for MethodOne with One argument");
+	}
+	public static void main(String[] args) 
+	{	
+		Test t =new Test();
+		t.methodOne();
+		t.methodOne(10);
+	}	
+}
+Output
+Impl for MethodOne...
+Impl for MethodOne with One argument
+
+
+case3:
+ If two interfaces contains a method with same signature but different return types then it is  not possible to implement both interface 
+ simultaneously.
+
+eg#1.
+interface IRight
+{
+	public void methodOne();
+}
+interface ILeft
+{
+	public int methodOne();
+}
+
+public class Test implements ILeft,IRight
+{
+	@Override
+	public void methodOne()
+	{
+		System.out.println("Impl for MethodOne...");
+	}
+
+	@Override
+	public int methodOne()
+	{
+		System.out.println("Impl for MethodOne with One argument");
+	}
+	public static void main(String[] args) 
+	{	
+		Test t =new Test();
+
+		//Overloading
+		t.methodOne();
+		t.methodOne();
+	}	
+}
+Output
+CE: ambigous method call.
+
+Can a java class implement any no of interfaces simultaneously?
+Answer.yes, except if two interfaces contains a method with same signature but different return types.
+
+
+Variable naming conflicts::
+   Two variables can contain a variable with same name and there may be a chance variable naming conflicts but we can resolve 
+   variable naming conflicts by using interface names.
+
+eg#1.
+
+//SRS :: methods   -> public abstract
+//SRS :: variables -> public static final
+interface IRight
+{
+	int x = 888;
+}
+interface ILeft
+{
+	int x = 999;
+}
+
+public class Test implements ILeft,IRight
+{
+	public static void main(String[] args) 
+	{	
+		//System.out.println(x);	
+		//System.out.println(Test.x);	
+		System.out.println(IRight.x);	
+		System.out.println(ILeft.x);	
+	}	
+}
+Output
+888
+999
+
+MarkerInterface
+================
+=> If an interface does not contain any methods and by implementing that interface if our Object will get some ability such type of 
+   interface are called "Marker Interface"/"Tag Interface"/"Ability Interface".
+=> example
+           Serializable,Cloneable,SingleThreadModel,RandomAccess.
+
+example1
+   By implementing Serializable interface we can send that object across the network and we can save state of an object into the file.
+
+example2
+   By implementing SingleThreadModel interfaace servlet can process only one client request at a time so that we can get "Thread Safety".
+
+example3
+   By implementing Cloneable Interface our object is in a position to provide exactly duplicate cloned object.
+
+
+Without having any methods in marker interface how objects will get ability?
+  Ans.JVM is responsible to provide requried ability.
+
+Why JVM is providing the required ability to Marker Interfaces?
+ Ans. To reduce the complexity of the programming.
+
+Can we create our own marker interface?
+  Yes, it is possible but we need to cusomtize JVM.
+
+=============================================================
+                       Adapter class
+=============================================================
+It is a simple java class that implements an interface only with empty implememtation for every method.
+If we implement an interface compulsorily we should give the body for all the methods whether it
+is required or not. This approach increases the length of the code and reduces readability.
+
+eg:: interface X{
+	void m1();
+        void m2();
+        void m3();
+	void m4();
+        void m5();
+     }
+    class Test implements X{
+	public void m3(){
+          System.out.println("I am from m3()");
+        }
+        public void m2(){}
+        public void m3(){}
+	public void m4(){}
+        public void m5(){}
+    }
+
+In the above approach, even though we want only m3(), still we need to give body for all the abstract methods, which increase the 
+length of the code, to reduce this we need to use "Adapater class".
+Instead of implementing the interface directly we opt for "Adapter class".
+Adapter class are such classes which implements the interface and gives dummy implementation for all the abstract methods of interface.
+So if we extends Adapter classes then we can easily give body only for those methods which are interested in giving the body.
+
+eg::
+interface X{
+	void m1();
+        void m2();
+        void m3();
+	void m4();
+        void m5();
+}
+abstract class AdapaterX implements X{
+	public void m1(){}
+        public void m2(){}
+        public void m3(){}
+	public void m4(){}
+        public void m5(){}
+}
+class TestApp extends AdapterX{
+	public void m3(){
+		System.out.println("I am from m3()");
+	}
+}
+
+eg:: interface Servlet{....}
+     abstract class GenericServlet  implements Servlet{}
+     abstract class HttpServlet extends GenericServlet{}
+     class MyServlet extends HttpServlet{}
+
+Note:: Adapter class and Marker interface are big utilites to programmer to simplify programming.
+
+Interview Questions
++++++++++++++++++++
+Q>What is the difference b/w abstract class and interface?
+Q>Every method present inside the interface is abstract,but in abstract class also we can take only abstract methods also then what is the need
+   of interface concept?
+Q> Why abstract class can contains constructor and interface doesn't contains constructor?
+Q> When to go for interface and when to go for abstract class?
+
+
++++++++++++++++++++++++++++++++++++
+
+Difference b/w Abstract class and Interface?
+  Interface:: If we dont know anything about implementation just we have requirement specification then we should go for interface.
+  Abstract class: If we are talking about implementation but not completely then we should go for abstract class.
+
+  Interface:: Every method present inside the interface is always public and abstract whether we are declaring or not.
+  Abstract :: Every method present inside abstract class need not be public and abstract.
+
+  Interface:: We can't declare interface methods with the modifiers like private,protected,final,static,synchronized,native,strictfp.
+  Abstract :: There are not restrictions on abstract class method modifiers.
+
+  Interface:: Every interface variable is always public static final whether we are declaring or not.
+  Abstract:: Every abstract class variable need not be public static final.
+
+  Interface:: Every interface variable is always public static final we can't declare with the 
+              	      following modifiers like private,protected,transient,volatile.
+  Abstract::  No restriction on access modifiers
+
+  Interface:: For every interface variable compulsorily we should perform initialisation at the time of declaration, 
+		otherwise we get compile time error.
+  Abstract::  Not required to perform initialisation for abstract class variables at the time of declaration.
+
+  Interface:: Inside interface we can't write static and instance block.
+  Abstract :: Inside abstract class we can write static and instance block.
+
+  Interface:: Inside interface we can't write constructor.
+  Abstract :: Inside abstract class we can write constructor.
+
+Interview Questions
++++++++++++++++++++
+Q>What is the difference b/w abstract class and interface?
+
+Q>Every method present inside the interface is abstract,but in abstract class also we can take only abstract methods also then what is the need
+   of interface concept?
+Ans. we can replace interface with abstract class,but it is not a good programming practise.if we try to do, it would result in 
+     "missusing the role" of abstract class and it would also create peformance issue.
+
+Using interface
++++++++++++++++
+interface ISample
+{
+
+}
+class SampleImpl implements ISample
+{
+
+}
+
+1. ISample sample=new SampleImpl();//one level chaining :: SampleImpl ---> Object[Performance is relatively high]
+2. While Implementing ISample, we can also get the benefit from Another class[Inheritance : Reusability].
+
+Using Abstract class
+++++++++++++++++++++
+abstract Sample
+{
+
+}
+class SampleImp extends Sample
+{
+
+}
+1. Sample sample=new SampleImp();//Multi level chaining:: SampleImp ---> Sample ---> Object [Performance is low]
+2. While extending Sample, we can't get the benefit of other classes[Inheritance can't be used here]
+
+Q> Why abstract class can contains constructor and interface doesn't contains constructor?
+ => Constructor :: To initialize the instance variable of an object, meaning is to provide values for instance variables.
+		:: In abstract class we have instance variable so we need constructor for initializing the instance variables.
+		:: In case of interface, we don't have instance variable we have variables which are of type 
+			public static final, these variables are initialized at the time of declaration only.
+		   so we dont' need constructors in interface.
+
+
+Q> When to go for interface and when to go for abstract class?
+   interface -> To promote 100 percent abstraction we need to go for "interface" or to provide Software Requirement Specification we need to 
+		go for "interface".
+   abstract class -> If we are taking about implementation that is partial implementation, then we need to go for "abstract class".
+
+Which of the following are valid?
+  1. The purpose of the constructor is to create the object.
+  2. The purpose of the constructor is to initialize the object,not to create the object.
+  3. Once constructor completes then only object creation completes.
+  4. First object will be created and then constructor will be executed.
+  5. The purpose of the new keyword is to create object and the purpose of constructor is to initalize the object.
+  6. We can't create Object for abstract class directly but indirectly we can create.
+  7. Whenever we are creating child class object automatically parent class object will be created.
+  8. Whenever we are creating child class object automatically abstract class constructor(provided if it is parent) will be executed.
+  9. Whenever we are creating child class object automatically parent  constructor will be executed but parent object wont be created.
+  10. Either directly or indirectly we can't create Object for abstract class and hence constructor concept is not applicable 
+      for abstract class.
+  11. Interface can contain constructor.
+
+Valid : 2,4,5,8,9
+
+Invalid : 1,3,6,7,10,11
+
+
+Student std = new Student();
+
+++++++++++++++++++++++++++++++++++++++++++
+
+ExceptionHandling
+=================
+1. Introduction
+2. Runtime stack mechanism
+3. Default exception handling in java
+4. Exception hierarchy
+5. Customized exception handling by try catch
+6. Control flow in try catch
+7. Methods to print exception information
+8. Try with multiple catch blocks
+9. finally
+10. Difference between final, finally, finalize
+11. Control flow in try catch finally
+12. Control flow in nested try catch finally
+13. Various possible combinations of try catch finally
+14. throw keyword
+15. throws keyword
+16. Exception handling keywords summary
+17. Various possible compile time errors in exception handling
+18. Customized exceptions
+19. Top-10 exceptions
+20. 1.7 Version Enhancements
+    1. try with resources
+    2. multi catch block
+21. Exception Propagation 
+22. Rethrowing an Exception
+
+Exception
+=========
+=> An unwanted/expected event that disturbs the normal flow of execution of program is called "Exception handling".
+=> The main objective of Exception handling is to handle the exception.
+=> It is available for graceful termination of program.
+
+
+
+What is the meaning of Exception handling?
+ Exception handling means not repairing the exception.
+ We have to define alternative way to continue rest of the program normally.
+ This way of defining an alternative is nothing but "Exception handling".
+
+example
+   Suppose our programming requirement is to read a data from a file locating at one location,
+   At run time if the file is not available then our programm should terminate succesfully.
+   Solution:: Provide the local file to terminate the program succesfully,This way of defining alternative is nothing but "Exception handling".
+
+
+eg#1.
+   try{
+      read data from London file
+   }
+   catch(FileNotFoundException e){
+     use local file and continue rest of the program normally
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
