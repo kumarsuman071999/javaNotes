@@ -1,0 +1,1337 @@
+++++++++++++++++++++
+1. Identifier
+  A name in a java program is called identifer.
+  The name can be class name, variable name, method name, label name ,interface name, enum name.
+  
+  class Test{
+	public static void main(String[] args)
+	{
+		int x=10;
+	}
+
+  }
+
+Identifier: Test,x, String, args, main
+
++++++++++++++++++++++++++
+Rules for Identifier
++++++++++++++++++++++++++
+Rule1: the allowed character in java identifier are
+	a to z, A to Z, 0 to 9, _, $
+Rule2: If we use any other charcter , then the program would result in compileTime error
+
+Rule3: Identifier can not start with digit.
+
+Rule4: Identifier are case sensitive, as such java language only case sensitive(jvm)
+class Test{
+	int number=10;
+	int Number=10;
+
+}
+
+Rule5: There is no constrant of the length of the java identifier,  but it is not recomended to take the length more than 15.
+
+Rule6: Reserve keyword not allowed in identifier.
+	eg: int while=10;
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+2. Execution of java
+
+	Comilation phase						Execution phase(Interpretter) line by line execution
+--------------------------------------------------------------------> ------------------------------------------------->
+	        javac filename.java						java filename.java
+.java file(HLL)---------------------Compiler---------.class file(byte code)------------------------JVM---------cpu------output
+
+
+COMPILE Time error: Write a code in high level language and comiler will run all line at time and generate Byte code in single go. while compiling HLL any Syntax error generated, that error should refer as comiletime error.
+
+RUNTIME error: JVM wil take line by line code from byte code and execute it.If any Problem/exception occur while execution of byte code by jvm, 
+		then this exception/problem called Runtime error.
+
+Note1:java will run in hybrid mode(comilation + execution)
+
+Note2: Interpretter: it will read 1st line generate byte code, return back , read 2nd line and generate byte code for 2nd line.(continious process till last)
+
+Note3: In java language, the memory for the varaible will be given at runtime, so we say java language as "Dynamic Programing language".
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3. Reverse word
+In java some identifier are reserved to associate some functionality or meaning such type of reserved identifier are called as "reserve keyword".
+
+Reserve word for Datatype:
+	int,float, char,long,double,boolean,short,byte
+
+Reserve word for flow control
+	while, doWhile, if, else, default, continue, return,for
+
+Reserve word for indentifier:
+	private,public,protected,default,synchronized,transient,volatile,final,abstract,native
+
+Reserve word for Exception Handling:
+	try,catch,throw,throws,assert,finally
+Reserved word for class type:
+	class,package,import,extends,implements,interface,enum
+Reserved word for Object type
+	new,instace,super,this
+Reserve word for returntype of metod:
+	void
+
+Conclusion:
+	1. all reserved word contain only lower case alphabets.
+	2. In java to create object for class we have "new" keyword, but we don't have delete keyword to destroy the object where as destrying 
+		the object is taken care bu a program(thread) called "Garbage collector".
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Data type: 1) primitive   2) Advanced DataType
+
+primitive: Numeric ,boolean,byte
+++++++
+byte
++++++
+byte(size:1 byte(8bit))
+minrange: -128(Min_value)
+maxrange: +127(Maxvalue)
+Corresponding wrapper class is java.lang.byte
+
+When to use byte dataType ?
+=> byte datatype is suitable only when we work with handling data in term of streams either from the file or from the network.
+
+Note::
+if the no is positive number then first bit will be zero
+if the no isnergative number then first bit will be one.
+Negative number stored in 2's compliment
+
+eg::
+	byte b=127;
+	byte b=130;
+
++++++++
+long
++++++
+long(8 byte to 64 bits)
+
+eg: long data=21474836491L
+eg: long data=21474836491l
+
+Note::
+=> we can use both "L" and "l" in last to define it is long 
+
+++++++
+double
++++++++
+Corresponding wraper class java.lang.Double
+size: 8 byte memory allocated to ram
+
+eg: double d=35.5;
+    double d=35.5D
+    double d=35.4d
++++++++++++
+char type
++++++++++
+it is repersented by single character with in a single quotes
+eg: cahr c='a';
+    char c=97;
+    char c='ax';(invalid)
+     char c="a";(invalid)
+
+++++++++++
+type casting
+++++++++++++
+=> the process of converting lower data type to higher datatype  or vice versa is called type casting.
+=> Implicit typeCasting: converting data from lower data type to higher is called "Implicit type casting" : donw by compiler.
+=> Explicit typeCasting: converting data from higher to lower datatype is called "Explicit typeCasting" : done by developer.
+
+eg long data=10;(done by compiler) => int is converting into long done by comiler
+eg: int data=23l;(invalid) => long can be converted into int by comipler, 
+    int data=(int) 23l;
+
+Note: byte+byte=int;
+      byte+short=int;
+      short+int=int;
+      int+long=long
+      float+double=double
+
++++++++++++++
+Switch
++++++++++++++
+if several option are avalable then it is recomended to not use if-else lader, we should use switch statement.
+
+syntax:
+switch(x)
+{
+	case1:action1
+		break;
+	case2:action2
+	case3:action3
+	default: default action
+}
+
+Untill jdk1.4 version the allowed type for switch argument are "byte,short,char,int"
+from JDK 1.5 version onward wrapper classes are also possible "Byte, Short,Character,Integer and Enum"
+From JDK 1.7 version onwards we can also give "String".	
+
+eg:1.switch argument and case label can have expression, but case label should be cnstant expression.
+int x=10;
+switch(x+1){
+	case 10:
+	case 10+20:
+}
+
+eg2: final -> This keyword makes the variable compile time conatant, so compiler will be knowing the value of variable.
+ int x=10;
+ final int y=10;
+switch(x){
+	case 10:
+	case y:
+}
+
+eg3: case level value should lie in the range of switch argument type(byte -128 to 127) , otherwise it result in "Compiletime Error".
+ byte=10;
+switch(b){
+	case 10:
+	case100:
+	case1000:  // 1000 out of range of byte code so compile time error.
+}
+
+eg5:  
+byte=10;
+switch(b+1){ // byte+int=int
+	case 10:
+	case100:
+	case1000:  // 1000 in range of int data type.
+}
+
+eg6: Duplicate case level are not allowed in switch.
+ int x=10;
+switch(x){
+	case 97:
+	case 98:
+	case 'a': // char convert into int because switch argument is int case level: 97 , i.e dulicate value: compile time error.
+}
+
+Conclusion: 
+a) case level should we compile time constnt.
+b) duplicate case level are not allowed.
+c) case level should have expression, but it should be in compile constant expression.
+d) case level should be in range of switch argument type.
+
+++++++++++
+while
+++++++++++
+eg1:
+int a=10;
+int b=20;
+
+while(a<b){
+
+	sout("jjf");
+} 
+sout("jgjgj");
+
+Note: In compiling it will give no error because memory will assign at runtime. then it will infinite loop.
+if we define variable final then memory will be know to comipler.
+
+eg1:
+final int a=10;
+final int b=20;
+
+while(a<b){
+
+	sout("jjf");
+} 
+sout("jgjgj"); // unreachable code  at runtime time so it will give compiletime  error
+
+Conclusion:
+a)every final variable will replaced with corresponding value by the complier
+b)if any operation involves only constant then compiler is reponsible to perform operation.
+c) if any operation involves at least one variable, then compiler wont perform any operation, jvm will perform that operation.
+
++++++++++
+break
++++++++++
+ eg1: we can use break inside loop to brerak the loop based on condition.
+
+for(int i=0;i<=10;i++){
+	if(i==5)
+		break;
+	System.out.println(i);
+}
+
+eg2: break can we use with block also, but it could not be could practice
+int x=10;
+l1:{
+	sout("begin");
+	if(x==10)
+		break l1;
+	sout("end");
+	
+}
+sout("hello");
+
+o/p: begin hello
+
+Note: break can we use inside "switch or loop", any other if try to use it will result in compile time error.
+int x=10;
+if(x==10)
+	break; // compile time error 
+
+++++++++++
+continue
+++++++++++
+
+eeg1:
+int x=2;
+for(int i=0;i,10;i++){
+	if(i%x==0) |
+		continue;
+	sout(i);
+
+}
+o/p:1 3 5 7 9
+
+
++++++++++++
+Objec
++++++++++++
+
+=> to use == operator on refrence type, we need to check whether there exists a relationship b/w 2 operands.
+=> If relationship exist, it should be parent-child relation ship, otherwise it would result in compile time error.
+
+eg1:
+Thraed t= new Thread();
+String s= new String();
+Object o= new Object();
+StringBuffer sb= new StringBuffer();
+
+System.out.println(t==s); // compile time error
+System.out.println(o==s); // false => parent child relation
+System.out.println(t==0); // false
+System.out.println(sb==s);// compileTimeError
+
++++++++++++
+Bitwisw operato
++++++++++++++++
+
+1. &
+2. |
+3. ^ =>if both argument are different type then result is true
+4. ~ => it is negation operator
+
+ !(boolean compliment) => this opertor can be applied only on boolean types, but not on integeral types.
+
+|,^,& => this operator can be applied on boolean and even on integeral types
+
+eg:
+sout(4&5);//4
+sout(4|5);//5
+sout(4^5);//1
+
+sout(~4);
+sout(~true)// compileTimeError
+
+sout(!true);//
+sout(!4); //CE
+
+Note: Negative number store in computer using 2's compliment.
+	=> For negative number  MSB will be 1,for positive number MSB will be 0;
+
+++++++++++++++++++++++
+Short Circuit Operator
+++++++++++++++++++++++++
+
+&&,||
+=> Second argument evaluation is optional
+=> It is applicable for only boolean type not for integeral
+
+Note:
+x && y
+=> y will evaluated only if x will true, other wise y won't be evaluated.
+=> x is true , then y will be evaluated.
+
+x||y
+=> y will evaluated only if x is false, otherWise y wont evaluated.
+=> x is true, then y will not evaulated;
+
+++++++++++++++++++++++
+java operator precedence
+++++++++++++++++++++++++++
+
+1. unary operator:[],x++,x--,~,!,new
+2. Airthmetic operator: *, /,%, +,-
+3. shift operator: >>,>>>,<<,...
+4.Comparision operator:<,<=,>,>=
+Equality operator: ==,!=
+6. Bitwise operator: &,^,|
+7.Logical operator: &&,||
+8. Ternary operator: ? :
+9. Assignment opeartor: =,+=,-=,*=,/=,%=,..
+
+Note: Associativity for ternary and assignment is from [Right to Lef] where as for other operator it is [left to right]
+++++++++++++++++
+convention about writing
++++++++++++++++++++++++++
+a. classname ==>Pascal convention[first letter in upper case]
+b. methodname==>camelcase
+c. variablename==> caemelCase
+
+++++++++++++
+methods
++++++++++++++
+Arguments: When we make a call to the method by passing inputs, such inputs are called argument.
+Parameter: When we write a method to collect input,such input are called parameter.
+
+class Calculator{
+	// a,b are parameter
+	int addTwoNumber(int a, int b){
+		return a+b;
+	}
+}
+
+main method:
+int x=100;
+int y=200;
+add(x,y)// arguments
+
+
+
+
++++++++++++++++++++++
+Passing Argument
++++++++++++++++++++++
+When we are passing arguments we can pass them in 2 ways
+1) PASS BY VALUE:[work with primitive data type]
+	eg: int a=20;
+	    int b=10;
+	    int add(a,b);
+2) PASS BY REFRENCE[work with object type]
+
+
+
+++++++++++++++++++++
+Object Orientation
++++++++++++++++++++++
+=> It is perspective of looking at this world as "Collection of object"
+=> Every object in the real world come with 2 parts
+	a) Has-Part(properties/field/attributes)
+	b)Does-Part(beviour/action/methods)
+=> Every object belongs to a particular type , though that type does't exists in reality.(fruit does not exists in reality but its type apple exists) .
+=> The object belonging to the particular type exists and that type in java is called as "class".
+
+Note:
+To create a house, we need to visualize how the house should be and with visualization we create a blueprint for our house.
+=>class is blueprint with this we create object.
+=> object is "instance" of a class and It is also called "physical" representation of an class.
+=> new is operator which is used to create an object in java.
+=> using dot(.) operator we can call bevaiour/method of the class.
+=> we don't have to delete thr operator in java to destroy the objects, where destroying the object is taken care by "JVM(Garbage collector)".
+
++++++++++++++
+JVM
+++++++++++++++
+class Student{
+	String name;
+	int age;
+	public void dispStdDetails(){
+		sout(name);
+		sout(age);
+	}
+}
+
+class Test{
+	public static void main(String[] args){
+		Student ref= new Student();
+		s.dispStdDeails();
+	}
+}
+
+Jvm will load Test.class file by searching in the path[D:\Intellji]
+JVM found Test.calss which contain main then it will start executing.
+JVM will split JRE int three region:
+	a.methodArea[to keep .class file deatils]
+	b.stackArea[to keep the body of execution]
+	c.heapArea[object data with default value for properties based datatype]
+
+Upon loading main(), JVM started execution
+	a. loaded main() body to stackArea
+	b. Student s= new Student();
+		|=> JVM will go to heap area , craete object.
+		|=> load Student.class file by searching in cmd[D:\] to methodArea
+		|=> depending on datatype properties, supply the default values by giving a memory inside heaparea.
+		|=> Address of the object will be return true
+	c. s.dispStdDetails()
+		|=> JVM will call the method
+		|=> Body of dispStdDetails() will be returned into stack area.
+		|=> Execution of statement persent inside dispStdDetaila will hapen
+			sout(name); sout(age);
+		|=> Print the details of name and age into console[monitor]
+	d. remove stackArea of dispStddeatils()
+	e. remove stackArea of main()
+	f. since Student Object does't have refrence, it become garbage object[ callGarbage collector [ intrnallydone by JVM]].
+	g. Unlod the class in methodArea[Test.class, Student.class]
+	. Remove jre/jvm form ram.
+
+++++++++++++++++++++
+signature of main
+++++++++++++++++++++++
+public => jvm should access the main() without any authorization ant authentication.
+static => jvm should not create object of the class which contanins main() , it should directly call main methos
+void =>   jvm will not return anything, so we have to mark the return type void.
+main(String[] args)m => it refer to command line argument which the jvm will use to store the argument sent by the user.
+
+++++++++++++++++++++
+Rule of variable
++++++++++++++++++++
+What is variable ?
+=> It is an idenrifier or name given to memory location which hold our data.
+
+How many type of variable in java language?
+=> 2 type of variable 
+	a. Based on type of value variable holds
+	b. Based on behaviour and position of its declaration
+
+Based on type of variable holds:
+  => we have 2 type
+      a. primitives  => Variable which hold primitive value
+      b. refrence type => Variable which hold, adress of the object, or these variable are used to refer the objects [Student std= new Student()]
+
+Based on the behaviour and position of its declaration
+	-> we have 3 type
+		a. instace variable[JVM will give default value]
+		b. static variable[ jvm will give default value]
+		c. local variable[ jvm will not give default value, programer should initialize]
+
+a. instance variable
+	-> these are variable which written inside the class, but outside metod.
+	-> these are the variable whose value changes from object to object.
+	-> instance variables are created at time object creation and destroy at time of object destruction.
+	-> instance variable store in heap area of the object .
+	-> instance variable only access only from instance area in instance method.
+	-> instance variable can we accessed through refrence in staic area in static metod.
+
+b. local variable
+	-> variable declare inside method or a block, such type of variable are called as "local vriable"
+	-> these variable are also called as temporary/stack variable.
+	-> local variable created during method execution inside stack, and destryed once controlled come out of metod execution.
+	-> scope of local variable is limited to that metod or block, if we try to access them outside block we will get "compileTimeError"
+
+	access modifier in java:
+		public, protected, default, private
+		static, final, synchronized, transient, volatile
+		abstract, native
+Note: The only access modifier which is applicable at the local variable level is "final", if we try to use any other access modifier it would result in compileTimeErroe.
+
++++++++++++++++
+polymorphism
++++++++++++++++
+1. overloading 
+=> within class two or more metod are said to be overloaded methods if they have same method name but change in arguments types.
+=> Overloading refer to "CompileTime Polymorphism"
+=> In overloading compiler is responsible for method resolution(binding) based on the refrence type, se we say overloading as "compileTime
+   Polymorphism/Eager Binding".
+
+=> order of binding method call would based on 
+	a. exact match
+	b. type promotion
+	c. wraper class
+=> In case of refrence type, first priority is for child and then parent.
+=> if nothing bind then comiletime error.
+
++++++++++++++++++
+Var args
++++++++++++++++++
+we can declare a method with variable no of arguments such type of methods are called as var args mehods
+public void m1(int ... data){
+
+}
+
+-> we can mix var-args with normal parameter also, and normal parameter can be different type and var-args can be different type.
+	public void m1(String name, int ...arr){
+		sout(name);
+		sout(arr);
+	}
+
+-> var-args methodr must be last arguments.
+-> In general var-args will get least priority that is if no other methods are avalable to bind only then var-arg method will get
+   a chance for binding. this is just like "default" statement in switch case.
++++++++++++++++++++++++++++++++++++++++++++++
+Object and String  and StringBuffer relation
++++++++++++++++++++++++++++++++++++++++++++++
+public class Object{
+	public boolean equals(String data){
+		if both object ref are equal -> return true
+		otherwise false
+	}
+	public String toString(){
+		print the adress of the object
+	}
+
+}
+
+public final class String extends Object{
+	public String concat(String data){}
+	public String toUpperCase(String data){}
+	public String toLowerCase(String data){}
+	
+	@Override
+	public boolean equals(String data){
+		compare the content present inside the object
+		if both are equal-> return true
+	}
+
+	@Override
+	public String toString(){
+		//print data persent inside the object
+	}
+}
+
+public final class StringBuffer extends Object{
+	public String concat(String data){}
+	public String toUpperCase(String data){}
+	public String toLowerCase(String data){}
+	public boolean equals(String data){}
+
+	@Override
+	public String toString(){
+		//print data persent inside the object
+	}
+}
+
++++++++++++++++++++++++
+String
++++++++++++++++++++++++
+=> String in java refer tocollection of character.
+ Q) When we store Collection of character in char[], why we need String class in java?
+  ans) if we use String as Array of character, then as a java programer to perform some operation on the array data we need to write a method
+       -> Writing up a logic and working with that logic is always tough for programer.
+       -> to reduce the burden on developer, sun team had made "Array of character" data as "Object".
+       ->Since they made Array of character as "Object", we need a blue print for an object called "class" and this blueprint is only "String"
+
+eg1: 
+char[] name={'s','u','m','a','n'};
+System.out.println(name);
+
+public void convertToUpper(char[] name)
+{
+	//logic
+}
+=> eg:: we can create string in two ways:
+	String name="suman";// new object with ref name will create
+	String name1= new String("suman"); // new object memory will create in heap, with ref of name1 in stack.
+
+=> In java string object is by default immutable, meaning once the object will create we can't change the value of object, If we try to change then those
+  change will reflected on the new object not on the existing object.
+
+case1: String s="sachin";
+       s.concat("tendulkar"); // new object got created with modification so immutable
+       sout(s); // sachin
+
+       StringBuilder sb= new StringBuilder("sachin");
+	sb.concat("tendulkar");
+	sout(sb);// sachintendulkar (on the same object modification is done, so mutable)
+
+case2: String s1= new String("suman");
+	String s2= new String("Suman");
+        sout(s1==s2)//(false)=> s1,s2 compare the object ref
+	sout(s1.equals(s2));//(true)compare the content inside the object
+			or
+
+      StringBuffer s1= new StringBuffer("suman");
+      StringBuffer s2=new StringBuffer("suman);
+      sout(s1==s2);// return false
+      sout(s1.equals(s2)); // comparing ref of both object ref.
+
+case3: String s= new String("suman");
+	In this case, 2 object will be created one int the heap and the other one in the String constant pool(scp), and the ref. always point to heap.
+		vs
+	String s="Suman";
+	In this case only one object will be created int SCP and it will be ref. to scp.
+
+Note: Object creatin in SCP is always optional, Ist jvm will check is any object already created with the required content or not.
+	if it is already avalable then it will reuse the existing object instead of creating the new object.
+	if not avalable only then new object will create in scp, so we say that there is no chance of existing duplicate object in SCP.
+
+	Garbage Collector can't access scp area, even though the object does not have any refrence still  object is not eligible for GC.
+	all SCP object will destroyed only at the time of JVM shutdown.
+
+	String s1= new String("suman");
+	String s2= new String("Suman");
+	String s3="Suman";
+	String s4="Suman";
+-> ref diagram in copy to understand.
+-> Two object are created in the heap area as "suman" with ref s1,s2 and one object created in SCP with ref of s3,s4.
+
+case4: String s= new String("sachin");
+	s.concat("tendulkar");
+	s=s.concat("Ind");
+	s="sachintendilkar";
+output: Direct literal are always placed in scp, because of runtime operation if object is required to create compulsorily that object
+	should be placed on the heap, but not on scp.(ref diag.)
+
+Importance of scp
+--------------------
+1. In our program if any string object is required to use repeatedly then it is not recommended to create multiple object with same content
+    it reduce performance of the system and effect memory utilization.
+2. we can create only one copy and we can reuse the same object for every requirement. this approch increase performance and memory utilization we can
+    acheive this by usinf scp.
+3. In scp several refrence pointing to same object the main disadvantage of this approch is using one refrence we are performing any change the 
+   remaining refrence will be impacted. to overcome this problem sun people introduce immutability concept for string objects.
+4. According to this once we create string object we can't perform any changes in the existing object if we are trying to perform any changes with 
+   those changes a new string object will be created hence immutability is the main disadvantage of scp.
+
+case4: Intern(): Using heap object refrence, if we want to get corresponding scp object, then we need to use intern() method
+
+eg1: 
+	String s1= new String("sachin"); one in heap(s1) and other one in scp
+	String s2= s1.intern(); // using s1 accsess in scp which has no ref
+	sout(s1==s2);// false
+	String s3="sachin";
+	sout(s2==s3);// true
+eg2::
+	String s1= new String("sachin");
+	String s2= s1.concat("ind");// one in scp(ind) and other in heap(s2)
+	String s3= s2.intern();
+	String s4="sachinind";
+	sout(s1==s3)// false
+	sout(s2==s3)false
+	sout(s3==s4)// true
+
+String calss constructo
+-------------------------
+String s= new String();              => create an empty String object
+String s=new String(String literals) => Create an object with String literals on heap
+String s=new String(StringBuffer sb);=> Creates an equivalent String object for String Buffer
+String s= new String(char[] ch);     => Creates an equivalent String object for character array
+String s= new String(byte[] b);      => creates equiavalent String object for byte array
+
+eg:
+char[] ch={'s','u','m','a','n'};
+String name=new String(ch);
+sout(name);//suman
+
+eg:
+byte[] b={100,101,102};
+String s=new String(b);
+sout(s);//def
+
+=> to know more about method type: javap java.lang.String
+
+Important method in String
+---------------------------
+1. public int length()
+2. public boolean isEmpty()
+3. public boolean equals(Object o)
+4. public char chatAt(int index)  
+5. public String concat(String str)
+6. public boolean equalsIgnoreCase(String s)
+7. public String subString(int begin,int end)
+8. public String subString(int end)
+9. public String replace(char old, char new)
+10 public String toLowercase()
+11 public String toUpperCase()
+12 public String trim()
+13 public String indexOf(char ch)
+14 public int lastIndexOf(char ch)
+
+-> public String trim()
+	to renove blankspace persent at the begnig and end of tring but not the blank space persent at the middle of the sting.
+
+-> public int indexOf(char ch)
+	it will return indx of 1st occurance of the specified character if the specified caharcter is not avalable it will return -1
+	String s="suman";
+	sout(s.indexOf("s"));// 0
+	sout(s.indexOf("z"));//-1
+-> public int lastIndexOf(char ch)
+	it return the index of last occurance of the specified character , if not avalable return -1. 
+
+-> public boolean isEmpty()
+	String s="";
+	sout(s.isEmpty());// true
+	sout(s.isBlank());// true
+	String s1="  ";
+	sout(s1.isEmpty()); // false
+	sout(s1.isBlank()); // true
+
+Note: subString method are overloaded
+
+Note: Internally String data is stored as  character of Array, as a programer we can't access the data at index level directly.
+	we need to use methods.
+	eg: String name="suman";
+	    sout(name[3]);// error: array is required, but string found, to access array of character used method.
+	    sout(name.charAt(3));//a
+	    sout(name.charAt(100)); // StringIndexOutOfBoundException
+	eg:
+	   String subject="java";
+	   sout(subject.equals("java));// true
+	   sout(subject.equals("JAVA"));// FALSE
+   	   sout(subject.equalsIgnoreCase("JAVA")); // true
+	   sout(subject.subString(2)); // from 2 index till end will be printed(va)
+	-> index value will always from left to right, if not then it throw exception
+
+Note: Because of runtime operation , if there is a change in the content with those change a new object will be created only on the heap, but not in scp.
+       this rule is applicable for object persent in both SCP and heap.
+
+Mutable
++++++++++++++
+=> if we try to make change with that change no new object will be created, changes will hapen on the ame object.
+=> To craete a mutable String in java we have 2 classes
+	a. StringBuffer
+	b. StringBuilder
+
+ StringBuffer
+_______________
+1. if content will cahnge frequently then it is not recomended to go for String object becoz for every new change new object will be created.
+
+2. Ti handle thsi type of requirement, we have StringBuffer/StringBuilder concept
+
+1. StringBuffer sb= new StringBuffer();
+	creates a empty StringBuffer object with default intial capacity of "16"
+	once StringBuffer reaches its maximum capacity a new StringBuffer Object will be created 
+		new capacity=(currentcapacity+1) *2;
+
+eg1:: StringBuffer sb= new StringBuffer();
+      System.out.println(sb.capacity()); // 16
+      sb.append("sumankumar07-27-");
+      sb.append("1999");
+      System.out.print(sb.capacity());// ((16+1)*2)34 
+eg2:: StringBuffer sb= new StringBuffer("suman");
+      System.out.println(sb.capacity()); // 16+5=21 => it create s StingBuffer object for the given String with capacity= s.length()+16
+      sb.append("sumankumar07-27-");
+      sb.append("1999");
+      System.out.print(sb.capacity()); // (21 +1)*2=44 is new capacity
+
+Important Method of StringBuffe
+================================
+
+a. public int length()
+b. public int capacity()
+c. public char charAt(int index)
+d. public void setCharAt(int index, char c)
+
+-> public void setCharAt(int index, char c)
+	StringBuffer sb= new StringBuffer("muman");
+        sb.setCharAt(0,'s');
+        System.out.print(sb);
+	o/p:suman
+----------------------------------------
+note: below all are overloaded method=> concept of polymorphism
+e. public StringBuffer append(String s)
+f. public StringBuffer append(int i)
+g. public StringBuffer append(long l)
+h. public StringBuffer append(boolean b)
+i. public StringBuffer append(double d)
+j. public StringBuffer append(float f)
+k. public StringBuffer append(int index, object o)
+
+eg: StringBuffer sb= new StringBuffer();
+      sb.append("pi value is : ");
+      sb.append(3.14);
+      sb.append(" this is exactly ");
+      sb.append(true);
+      System.out.print(sb);
+      o/p: pi value is : 3.14 this is exactly true
+
+________________________________________
+overloaded methods
+""""""""""""""""""""""
+
+l. public StringBuffer insert(int index, String s)
+m. public StringBuffer insert(int index, int i)
+n. public StringBuffer insert(int index, long l)
+o. public StringBuffer insert(int index, double d)
+p. public StringBuffer insert(int index, float f)
+q. public StringBuffer insert(int index, object o)
+r. public StringBuffer insert(int index, boolean b)
+
+eg:StringBuffer sb= new StringBuffer("man");
+      sb.insert(0,'S');
+      sb.insert(1,'u');
+      sb.insert(5," ");
+      sb.insert(6,"Kumar");
+      sb.insert(11,27);
+      sb.insert(13,1.99);
+      System.out.print(sb);
+      o/p:Suman Kumar271.99
+
+s. public StringBuffer delete(int indexBegin,int indexEnd)
+	It delete the character from specified index to end-1.
+   public StringBuffer deleteCharAt(int index)
+	it delete the character at specified index.
+
+t. public StringBuffer reverse(String s)
+	eg: StringBuffer sb= new StringBuffer("sachinramesh");
+	    sb.setLength(6);
+	    sout(sb);//sachin
+	
+u.public void trimToSize()
+	this method is used to deallocate extra allocated free memory such that capacity and size are equal.
+eg: 
+   StringBuffer sb= new StringBuffer(10000);
+   sout(sb.capacity());//1000
+   sb.append("suman);
+   sout(capacity());//1000
+   
+   sb.trimSize();
+   sout(sb);//sachin
+   sout(sb.capacity());//6
+
+   StringBuffer sb1= new StringBuffer();
+   sout(sb1.capacity())//16
+   sb1.ensureCapacity(1000);
+   sout(sb1.capacity()); // 1000
+
+Every meyhod present in StingBuffer is synchrinized, so at a time only one thread are allowed to operate on StringBuffer object. it would increase
+the wating time of threads it would create performance problems, to overcome this problem we should go for StringBuilder.
+
+StrinBuilder(1.5v)
+StringBuilder is same as StringBuffer with few difference
+	-> No method are synchronized
+	-> At a time more than one thread can operate so it is not ThreadSafe.
+	-> Threads are not required to wait so performance is high
+
+StringBuilder vs StringBuffer
+++++++++++++++++++++++++++++++++
+
+StringBuffer
+	-> JDK 1.0 version
+	-> Every method persent in StringBuffer is synchronized
+	-> only one thraed is allowed to operate on StringBuffer objects
+	-> Incraese the waiting time so, performance is low
+StringBuilder
+	-> JDK 1.5 version
+	-> method persent in StringBuilder is not Synchronized
+	-> multiple thread are allowed to operate on StringBuilder
+	-> no waiting , so performance is high
+
+=> when to go for String, StringBuffer, StringBuilder
+---------------------------------------------------
+String        =>we opt if the content is fixed and it wont change frequently
+StringBuffer  => we opt if the content change frequently but thread safe is required
+StringBuilder => we opt if the content change is required but not thread safe.
+
+MethodChaining
+++++++++++++++
+Most of the methods in String ,StringBuffer, StringBuilder return same type only. hence after applying method on the result we can call another method
+which form method chaining.
+
+eg:
+      StringBuffer sb= new StringBuffer();
+      sb.append("uman").insert(0,'S').append("Kumar").reverse();
+      System.out.print(sb);
+	o/p:ramuKnamuS
+
+final vs Immutability
+++++++++++++++++++++++++++
+=> final is modifier applicable for variable, where as immutability is applicaable only for objects.
+=> If refrence variable is declared as final, it means we can not perform reassignment for the refrence variable.
+=> By declaring a refrence as final variable we wont get immutability nature.
+=> final and immutability is different concept.
+
+eg:: final StringBuffer sb= new StringBuffer();
+      sb.append("uman").insert(0,'S').append("Kumar").reverse();
+      System.out.print(sb);
+      
+      sb= new StringBuffer();// CE :: cant assign a value to final variable
+      sb.append("sumana");
+
+Note: final variable(valid), final object(invalid), immutable variable(invalid), immutable object(valid)
+	StringBuffer, StringBuilder mutable, and all Wrapper(Integer..) class  and String by default Immutable.
+
+Question::
+1. Other than Immutability and Mutability what is diffn bt string and StringBuffer
+2. what is scp?
+3. Advantage and disadvantage of scp?
+4. Why scp is applicable only for string not for StringBuilder?
+5. Is there any object that is Immutable just like string?
+6. What is Interning?
+7. Different b/t final and Immutability?
+8. Diffn b/t String and StringBuilder?
+
+
+
+pilar of OOPS
++++++++++++++++++++
++++++++++++++++++++
+
+1.Encapsulation(data hiding + abstraction)
+2.Inheritance (re-usable)
+3.Polymorphism (Flexibility)
+
+DataHiding: Our internal data should not go to outside world directly that is outside person cant't access internal data directly.
+		to promote datahiding, we need to use "access modifier"
+		eg: private, protected
+eg1:
+class Account{
+	private double blance;
+}
+Note: to access the blance variable data form the end-user, validation(collect username,password) will be performed by the application.
+
+Abstraction: Hiding internal implementation, but exposing the set of service is called "Abstraction".
+	     In java to bring abstraction, we use "abstract classes and interface".
+
+eg: ATM GUI Screen
+	BankPeople -> HighLight the set of service they are offering.
+        EndUser -> Using the offered service, the end user will use the application.
+
+Encapsulation:
+Binding of data and corresponding method in single unit is called encapsulation.
+If any class follows datahiding and abstraction such type of class is said to be "Encapsulated class"
+
+-> In Encapsulation variable should be private and method should be in public with geters and seeters.
+
+import java.io.*;
+
+    class Page{
+    private int page;
+  
+    public int getPage(){
+      return page; // instance variable in heap area
+    }
+    public void setPage(int page){
+      this.page=page; // instance variable(heap area)=local variable(stack area)
+    }
+  }  
+  
+
+class GFG {
+	public static void main (String[] args) {
+		Page ref= new Page();
+		ref.setPage(30); // inject value 30 in instance variable page in heap area
+		System.out.println(ref.getPage());
+	}
+}
+
+=> if we are not using this keyword then shadowing problem will come into picture .In set data page=page, in stack area reassign the vaue. it never point in 
+    instance variable if we are not using this keyword.
+
+Dependency Injection
++++++++++++++++++++++++
+=> It refers to process of injeaction the value to the instance variable of class.
+=> we can perform dependancy injection in 2 ways
+	a. through seeter method
+	b. through constructor method
+
+Constructor
+++++++++++++
+-> A constructor is method whose name is same as that of the class name.
+-> A constructor would not have return type
+-> contructor get called automatically during creation of an object
+-> constructor are normally give meaningfull value to instance variable of the class.
+-> In a class , if we don't write any constructor , then only when compiler will write default constructor for class.
+-> Default constructor will not supply any meaning value to instance variable of class, to provide meaning value for instance variable , we have to write 
+   parametrised constructor.
+
+static
+++++++++++
+
+How main method run by JVM?
+when we execute java Filename.java => jvm will execute Filename.java and  find static main method with "String args" and call by jvm.
+
+class Test{
+	public static void main(String[] args){
+		Sout("main call");
+	}
+	public static void main(int args){
+		sout("programer should call this method not jvm");
+	}
+}
+
+-> Overloaded static method(yes possible), jvm is designed in this way that  only main(String[] args ) method call by JVM, other than this method call by   	programer.
+
+=> This access modifier is applicable at
+	a. class
+	b. variable
+	c. method
+	d. block
+
+variable: if we mark variable as static, then those variable are required as "class level variable".
+	  static variable are unique with respect to class, they are not w.r.t object.
+	  memory for static variable will be given in method area.
+	  if we don't initalize static variable then memory for static variable will be taken care by jvm
+
+	calss Student{
+		static String nationality="Ind"; // is unique variable store in method area, staic variable(static block)
+		String name; // object , heap area , instance variable(constructor or instance method)
+		String age; // object heap area , instance variable
+		Student(String name, int age){
+			this.name=name;
+			this.age=age;
+		}
+	}
+
+method : if we mark a method as static, then those method can be called in 2 ways:
+		a.using className(best practice)
+	  	b.using objectName
+
+block: we can mark a block with static access modifier.
+       This block is mainly meant for "initializing the static variable"
+       This block will execute only once, so we normally keep "Driving code" in static block
+
+static control flow
++++++++++++++++++++++
+cab we write multiple static block, if yes how will they get executed
+ans: yes, it gets executed in order of placing the block in the class.
+
+eg:
+   static{
+	sout("first");
+   }
+   static{
+	sout("second");
+   }
+   let main methdo Test.class
+   output: first 
+           second
+
+eg:
+class Test{
+       (a)static int i=10;(1)
+        static{
+		methodone();(2)
+		sout("First block");(3)
+	}
+        (b)public static void main(String[] args{(6)
+		methodone();(7)
+		sout("Inside main method");(8)
+	}
+        (c)public static void methodone(){
+		sout(j);
+	}
+        (d)static{(4)
+		sout("second static block");
+	}
+        (e)static int j=20;(5)
+}
+
+o/p: 0 // j value
+     First block
+     second static block
+     20 // j value
+     Inside main method
+     
+     
+
+1. Identification of static member from top to bottom(compiler)(a to e)
+	i=0 |
+	    | RIWO(read indirect & write only)
+	j=0 |
+2. execution of static variable and static block execution from top to bottom(JVM) (1 to 8)
+	i=10 |
+	    | R&W(read & write only)
+	j=20 |
+3. execution of main method
+
+Read Indirect Write only
+---------------------------
+Direct read=> with in static block, if we are reading a variable then such type of read is called as "Direct read"
+Indirect read=> if we are calling static a method , and with in method if we are reading a variable then such type of read is called "indirect".
+
+usage of static block in real time
+-------------------------------------
+Every driver software internally contains static block to register the driver with DriverManager. which helps the programer to get JDBC environment
+in JRE, to do this we need static block.
+
+Note: it is manadatory to write main() inside every class for the execution to happen. if we dont write then class will not loaded.
+     System.exist(0) -> this line , if jvm execute then it will shutdown itself, by skipping the reamining satatements in the program.
+
+instance control flow
+++++++++++++++++++++++++++
+intance block: this block gets executed at the time of craeting object, but before the call to constructor.
+               This block will be executed for every object we create, but before the call to constructor.
+
+Note:
+    1. Constructor: initalize the object with the required value
+    2. instance block: Apart from initalization, if we want to perform any other activites then we need to go for instance block.
+    3. Order of execution: first instance block then construstor.
+
+Q count no of Object created?
+
+class Page{
+        
+        static int count;
+        int i;
+  
+        Page(int i){
+            this.i=i;
+        }
+        Page(){
+        
+        }
+        // instance block
+        {
+            count++;
+        }
+  }  
+  
+
+class GFG {
+	public static void main (String[] args) {
+		Page ref= new Page();
+		Page ref1=new Page(2);
+		System.out.println(Page.count);
+	}
+}
+o/p:2
+
+final variable
++++++++++++++++
+a.final instance variable
+b.final static variable
+c final local variable
+
+Note: A variable is said to be final if the value of the variable is fixed. we can't change the value once it is initalized.
+      if variable is final, then compiler will get to know the value of the variable and these values will be used during the evaluation of expression.
+
+eg1:
+class Test{
+	int i;
+	public static void main(Strins[] args){
+		sout(new Test().i);
+	}
+}            
+o/p:0
+-> if instance variable is marked as final. for such variable jvm will not give fefault value, programer should provide default falue. otherwise result in
+   compile time.
+eg2:
+class Test{
+	int final i; // final should intialize at time of declaring, if not the compile time error.
+	public static void main(Strins[] args){
+		sout(new Test().i);
+	}
+}
+o/p:CE
+
+Place to initalize the value for final instance variable
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+1. At time of declaration
+class Test{
+	int i=100;
+	public static void main(Strins[] args){
+		sout(new Test().i);
+	}
+}            
+o/p:100
+2. Inside instance block
+
+class Test{
+	finla int i;
+	public static void main(Strins[] args){
+		sout(new Test().i);
+	}
+	{
+		i=100;
+	}
+}            
+o/p:100
+3. Inside constructor
+
+class Test{
+	final int i;
+	Test(){
+		i=100;
+	}
+
+	public static void main(Strins[] args){
+		sout(new Test().i);
+	}
+}            
+o/p:100
+
+-> apart from 3 places If you try to decalre any other place result in CE
+
+eg3:
+class Test{
+	int i;
+	public void m1(){
+		i=100;
+	}
+	public static void main(Strins[] args){
+		sout(new Test().i);
+	}
+}            
+o/p:CE
+
+Place to initalize the value for static variable
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+1.static block
+2.At time of declaration
+
+eg1:
+class Test{
+	static  int i;
+	
+	public static void main(Strins[] args){
+		sout(new Test().i);
+	}
+}            
+o/p:0
+
+-> if static variable is marked as final. for such variable jvm will not give default value, programer should provide default falue. otherwise result in
+   compile time.
+
+eg2:
+class Test{
+	static final int i;
+	
+	public static void main(Strins[] args){
+		sout(new Test().i);
+	}
+}            
+o/p:CE // variable i is not initalized in default contructor
+
+-> If variable is marked as static and final , then for those variable initalization should be completed before class loading complete, otherwise it would
+   be result in "CompileTimeError".
+
+local variable
+++++++++++++++++++
+1. initalition  i only.(final i=100)
+
+
+
+
+
+
+
+
+	
+         
+
+
+
+	
+	 
+ 
+  
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+

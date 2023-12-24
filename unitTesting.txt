@@ -1,0 +1,551 @@
+		JUNIT 5
+-----------------------------------------------------
+1.What are assertions in Jupiter?
+
+All JUnit Jupiter Assertions are static methods. As per the official document, “Assertions is a collection of utility methods that support asserting conditions in tests.” Use Assertions. assertEquals() method, if you need to assert that any given two values are equal.
+=> @org.junit.jupiter.api.Test : @Test anotation used at method level to test the method
+
+=>import static org.junit.jupiter.api.Assertions.*; => after impoting this package we will get all utility methods to support asserting conditions in tests, persent in Assertions class
+
+assertion Method
+------------------
+1. public static void assertEquals(int expected,int actual,int delta)
+2. public static void assertEquals(Integer expected, Integer actual, Integer delta, String message)
+3. public static void assertEquals(Integer expected, int actual, String message)
+4. public static void assertEquals(int expected, Integer actual)
+5. public static void assertEquals(float expected, float actual, float delta)
+6. public static void assertEquals(long expected, long actual, long delta)
+7. public static void assertEquals(short expected, short actual)
+8. public static void asserEquals(byte expected, byte actual, byte delta)
+9. public static void assertEquals(char expected, char actual)
+10.public static void assertEquals(Character expected, Character actual)
+11 public static void assertEquals(double expected, double actual)
+12 public static void assertEquals(Double expected, Double actual)
+13. public static void assertEquals(Object expected, Object actual, Object delta, String message)
+    public static void assertEquals(Integer expecetd, Integer actual, Supplier<String> messageSupplier)
+
+-------------------
+14. public static void assertNotEquals(Object expected, Object actual, Object delta, String message)
+    public static void assertNotEquals(Integer expecetd, Integer actual, Supplier<String> messageSupplier)
+
+-----------
+
+15.public static void assertArrayEquals(int[] expected, int[] actual, int delta, Supplier<String> messageSupplier)
+16. public static void assertArrayEquals(Object[] expected,Object [] actual, String message)
+
+--------
+17. public static void assertFalse(boolean condition, String messasge)
+18. public static void assertFalse(BooleanSupplier booleanSupplier)
+19 public static void asserFalse(boolean condition, Supplier<String> message)
+20 public static void assertFalse(BooleanSupplier booleanSupplier, Supplier<String> messageSupplier)
+21 public static void assertFalse(BooleanSupplier booleanSupplier, String messgae)
+
+----------------------
+ public static void assertTrue(BooleanSupplier booleanSupplier, Supplier<String> messageSupplier)
+
+---------------------
+public static void assertNull(Object actual,String message)
+public static void assertNull(Object actual, Supplier<String> messageSupplier)
+
+public static void assertNotNull(Object actual, String messgae)
+---------------------------------
+
+public static void assertSame(Object expecetd, Object actual, String message)
+public static void assertSame(Object ecpecetd, Object actual, Supplier<String> messageSupplier)
+
+-----------------------
+fail:
+public static void fail()
+public static void fail(Throwable cause)
+public static void fail(String message)
+public static void fail(String message, Throwable cause )
+public static void fail(Supplier<String> messageSupplier)
+
+
+1. assertEquals : The assertEquals assertion verifies that the expected and actual values are equal:
+------------
+
+
+@Test
+public void whenAssertingEquality_thenEqual() {
+    String expected = "Baeldung";
+    String actual = "Baeldung";
+
+    assertEquals(expected, actual);
+}
+
+It’s also possible to specify a message that displays when the assertion fails:
+
+assertEquals("failure - strings are not equal", expected, actual);
+
+
+2. assertArrayEquals  I
++++++++++++++++++++++
+-> if we want to assert that two arrays are equals, we can use the assertArrayEquals:
+	@Test
+	public void whenAssertingArraysEquality_thenEqual() {
+    		char[] expected = { 'J', 'u', 'p', 'i', 't', 'e', 'r' };
+    		char[] actual = "Jupiter".toCharArray();
+
+    		assertArrayEquals(expected, actual, "Arrays should be equal");
+	}
+
+
+If both arrays are null, the assertion will consider them equal:
+
+	@Test
+	public void givenNullArrays_whenAssertingArraysEquality_thenEqual() {
+    		int[] expected = null;
+    		int[] actual = null;
+
+    		assertArrayEquals(expected, actual);
+	}
+
+However, if we want to assert that the actual value differs by a predefined delta from the expected value, we can still use the assertEquals, but we have to pass the delta value as the third parameter:
+
+@Test
+void whenAssertingEqualityWithDelta_thenEqual() {
+    float square = 2 * 2;
+    float rectangle = 3 * 2;
+    float delta = 2;
+
+    assertEquals(square, rectangle, delta);
+}
+
+
+3. assertNotNull and assertNull
+++++++++++++++++++++++++++++++++
+
+->When we want to test if an object is null, we can use the assertNull assertion:
+
+@Test
+public void whenAssertingNull_thenTrue() {
+    Object car = null;
+    
+    assertNull("The car should be null", car);
+}
+
+Conversely, if we want to assert that an object shouldn’t be null, we can use the assertNotNull assertion.
+
+-> 
+  @Test
+void whenAssertingNotNull_thenTrue() {
+    Object dog = new Object();
+
+    assertNotNull(dog, () -> "The dog should not be null");
+}
+
+
+4. assertNotSame and assertSame
+++++++++++++++++++++++++++++
+
+-> With assertNotSame, it’s possible to verify that two variables don’t refer to the same object:
+
+@Test
+public void whenAssertingNotSameObject_thenDifferent() {
+    Object cat = new Object();
+    Object dog = new Object();
+
+    assertNotSame(cat, dog);
+}
+
+Otherwise, when we want to verify that two variables do refer to the same object, we can use the assertSame assertion.
+
+->
+ @Test
+void whenAssertingSameObject_thenSuccessfull() {
+    String language = "Java";
+    Optional<String> optional = Optional.of(language);
+
+    assertSame(language, optional.get());
+}
+
+assertTrue and assertFalse
+++++++++++++++++++++++++++++
+
+->If we want to verify that a certain condition is true or false, we can use the assertTrue or assertFalse assertions, respectively:
+
+@Test
+public void whenAssertingConditions_thenVerified() {
+    assertTrue("5 is greater then 4", 5 > 4);
+    assertFalse("5 is not greater then 6", 5 > 6);
+}
+
+
+->Thanks to the support of the lambda expression, it’s possible to supply a BooleanSupplier to the assertion,     	instead of a boolean condition.
+
+  Let’s see how we can assert the correctness of a BooleanSupplier using the assertFalse assertion:
+
+@Test
+public void givenBooleanSupplier_whenAssertingCondition_thenVerified() {
+    BooleanSupplier condition = () -> 5 > 6;
+
+    assertFalse(condition, "5 is not greater then 6");
+}
+
+
+5. fail
+++++++++++++++
+
+The fail assertion fails a test with the provided failure message, as well as the underlying cause. This can be useful to mark a test when it’s development isn’t complete:
+
+@Test
+public void whenFailingATest_thenFailed() {
+    // Test not completed
+    fail("FAIL - test not completed");
+}
+
+
+
+6. assertAll
++++++++++++++
+
+One of the new assertions introduced in JUnit 5 is assertAll.
+
+This assertion allows the creation of grouped assertions, where all the assertions are executed and their failures are reported together. In detail, this assertion accepts a heading that will be included in the message string for the MultipleFailureError, and a Stream of Executable.
+
+Let’s define a grouped assertion:
+
+@Test
+void givenMultipleAssertion_whenAssertingAll_thenOK() {
+    Object obj = null;
+    assertAll(
+      "heading",
+      () -> assertEquals(4, 2 * 2, "4 is 2 times 2"),
+      () -> assertEquals("java", "JAVA".toLowerCase()),
+      () -> assertNull(obj, "obj is null")
+    );
+}
+Copy
+The execution of a grouped assertion is interrupted only when one of the executables throws a blacklisted exception (OutOfMemoryError, for example).
+
+
+7. assertIterableEquals
++++++++++++++++++++++++++++++
+
+The assertIterableEquals asserts that the expected and actual iterables are deeply equal.
+
+In order to be equal, both iterables must return equal elements in the same order, and it isn’t required that the two iterables are of the same type in order to be equal.
+
+With this consideration, let’s see how we can assert that two lists of different types (LinkedList and ArrayList) are equal:
+
+@Test
+void givenTwoLists_whenAssertingIterables_thenEquals() {
+    Iterable<String> al = new ArrayList<>(asList("Java", "Junit", "Test"));
+    Iterable<String> ll = new LinkedList<>(asList("Java", "Junit", "Test"));
+
+    assertIterableEquals(al, ll);
+}
+
+In the same way as assertArrayEquals, if both iterables are null, they’re considered equal.
+
+
+ 8. assertLinesMatch
++++++++++++++++++++++++
+The assertLinesMatch asserts that the expected list of String matches the actual list.
+
+This method differs from the assertEquals and assertIterableEquals because for each pair of expected and actual lines, it performs this algorithm:
+
+Check if the expected line is equal to the actual one. If yes, it continues with the next pair.
+Treat the expected line as a regular expression and perform a check with the String.matches() method. If yes, it continues with the next pair.
+Check if the expected line is a fast-forward marker. If yes, apply fast-forward, and repeat the algorithm from the step 1.
+Let’s see how we can use this assertion to assert that two lists of String have matching lines:
+
+@Test
+void whenAssertingEqualityListOfStrings_thenEqual() {
+    List<String> expected = asList("Java", "\\d+", "JUnit");
+    List<String> actual = asList("Java", "11", "JUnit");
+
+    assertLinesMatch(expected, actual);
+}
+
+
+ 9. assertThrow
++++++++++++++++++++++
+In order to increase simplicity and readability, the new assertThrows assertion allows us a clear and simple way to assert if an executable throws the specified exception type.
+
+Let’s see how we can assert a thrown exception:
+
+@Test
+void whenAssertingException_thenThrown() {
+    Throwable exception = assertThrows(
+      IllegalArgumentException.class, 
+      () -> {
+          throw new IllegalArgumentException("Exception message");
+      }
+    );
+    assertEquals("Exception message", exception.getMessage());
+}
+The assertion will fail if no exception is thrown, or if an exception of a different type is thrown.
+
+eg::
+	@Test
+    void shouldReturnAirthmaticExceptionWhenHeightIs0InDietRecomended(){
+        // given
+        double weight=89.0;
+        double height=0;
+
+        // when
+        Executable executable=()->BMICalculator.isDietRecommended(weight,height);
+
+        //then
+        assertThrows( ArithmeticException.class,executable);
+    }
+
+Executable: public interface Executable
+Executable is a functional interface that can be used to implement any generic block of code that potentially throws a Throwable.
+The Executable interface is similar to Runnable, except that an Executable can throw any kind of exception.
+
+Rationale for throwing Throwable instead of Exception
+
+10. assertTimeout and assertTimeoutPreemptively
+++++++++++++++++++++++++++++++++++++++++++++
+If we want to assert that the execution of a supplied Executable ends before a given Timeout, we can use the assertTimeout assertion:
+
+@Test
+void whenAssertingTimeout_thenNotExceeded() {
+    assertTimeout(
+      ofSeconds(2), 
+      () -> {
+        // code that requires less than 2 minutes to execute
+        Thread.sleep(1000);
+      }
+    );
+}
+
+However, with the assertTimeout assertion, the supplied executable will be executed in the same thread of the calling code. Consequently, execution of the supplier won’t be preemptively aborted if the timeout is exceeded.
+
+If we want to be sure that execution of the executable will be aborted once it exceeds the timeout, we can use the assertTimeoutPreemptively assertion.
+
+Both assertions can accept a ThrowingSupplier, instead of an Executable, representing any generic block of code that returns an object and that can potentially throw a Throwable.
+
+Rule to write method name in unitTest
+++++++++++++++++++++++++++++++++++++++
+use: should when
+eg: shouldReturnTrueWhen
+
+Rule to write method body in unitTest
+++++++++++++++++++++++++++++++++++++++
+// given(write given value)
+
+// when
+
+//then
+eg:
+@Test
+    void shouldReturnTrueWhenDietRecomended(){
+        // given
+        double weight=89.0;
+        double height=1.73;
+
+        // when
+        boolean result=BMICalculator.isDietRecommended(weight,height);
+
+        //then
+        assertTrue( result);
+    }
+
+
+note: write as many no. of unit test as per requirement.
+
+Note2: Access modifier at variable level inside method of unit testing is restricted.
+
+=>Test multiple assertion in single method.
+-------------------------------------------
+ if we want to test multiple field at a time in one methos then we will go for assertAll method in JUnit:
+eg: here we are checking both height and weight both in sigle method of JUnit.
+
+@Test
+    public void shouldCoderReturnWithWorstBmiIfListIsNotEmpty(){
+        // given value
+        List coders= new ArrayList();
+         coders.add(new Coder(1.5,100));
+         coders.add(new Coder(1.72,89.1));
+         coders.add(new Coder(1.9,75));
+
+
+         // when
+        Coder coderWithWorstBMI= BMICalculator.findCoderWithWorstBMI(coders);
+
+        //then
+        assertAll(
+                ()->assertEquals(1.5,coderWithWorstBMI.getHeight(),"worst height"),
+                ()->assertEquals(100,coderWithWorstBMI.getWeight(),"worst weight")
+        );
+
+note: assertEquals(expected,bmiScore); // it will check ref of both the array, not value
+
+note: do not initalize the variable in test class directly,we can write voide setUp() and anotate with @BeforeEach
+      
+
+we can use assertEqual on every field inside object to check its each element inside object
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class DietPlannerTest {
+
+    // we can't access DietPlaneer intance variable directly because it is not static, so we create Object
+    // of DietPlanner and set value using setUp() method using calling contructor of DietPlan(Dipendency Inj).
+    private DietPlanner dietPlanner;
+    // DietPlanner(proteinPercentage, fatPercentage, carbohydratePercentage)
+    @BeforeEach
+    public void setUp (){
+        dietPlanner= new DietPlanner(20,30,50);
+    }
+
+    @Test
+    public void shouldReturnCorrectDietPlancWhenCoder(){
+        // given
+        List coders= new ArrayList();
+        coders.add(new Coder(1.5,100));
+        coders.add(new Coder(1.72,89.1));
+        coders.add(new Coder(1.75,73));
+
+        // then
+        // height,weight,age,gender
+        Coder coder=new Coder(1.75,73,26,Gender.MALE);
+        //int calories, int protein, int fat, int carbohydrate
+        DietPlan expected= new DietPlan(2127,106,71,266);
+
+        //when
+        DietPlan actual=dietPlanner.calculateDiet(coder);
+
+        //then
+        assertAll(
+                ()->assertEquals(expected.getCalories(),actual.getCalories()),
+                ()->assertEquals(expected.getCarbohydrate(),actual.getCarbohydrate()),
+                ()->assertEquals(expected.getFat(),actual.getFat()),
+                ()->assertEquals(expected.getProtein(),actual.getProtein())
+
+        );
+
+    }
+
+}
+
+BeforeALL(): It should be run exactly one time before performing all unit test case. and most important 
+             method should be static, if not then it will ignore all other test cases.
+	eg:
+	   @Test
+   	   @BeforeAll
+    	   public static void chechTestPassOrNot(){
+              System.out.println("no test case executed:");
+    	  }
+
+-> it is  veryExpensive operation, it should be use for start database connection or staring server.
+
+
+AfterAll(): It should be run exactly one time after performing all unit test cases. and access modifer should be      	    static, if not it will ignore all other case.
+
+BeforeEach(): run each time before excution of method.if 3 test method is there it will execute three times.
+AfterEach() run each time after execution of method. if 3 test method is there it will execute three times.
++++++++++++++++
+-> it should used to close databae connection and close server and collect garbage and clean it . 
+
+Parameterized Test
+++++++++++++++++++
+-> This feature enables us to execute a single test method multiple times with different parameters.
+
+=>Dependencies required
+
+In order to use JUnit 5 parameterized tests, we need to import the junit-jupiter-params artifact from JUnit Platform. That means, when using Maven, we’ll add the following to our pom.xml:
+
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-params</artifactId>
+    <version>5.10.0</version>
+    <scope>test</scope>
+</dependency>
+
+Also, when using Gradle, we’ll specify it a little differently:
+
+testCompile("org.junit.jupiter:junit-jupiter-params:5.10.0")
+
+=> Parametrized Test: Parameterized tests are like other tests except that we add the @ParameterizedTest   		             annotation on method level:
+
+1. ->@ValueSource(ints={1,2,3,4})
+   ->@ValueSource(strings={""})
+	Note: Demerit of these valueSource is that it will pass only single variable at time. for multiple 
+              variable we can't use valueSource.
+    eg: @ValueSource(strings = { "a1", "b2" }) // pasing string in value source 
+
+2. @CsvSource(value=Array of String)=> Csv(comma seperated value) 
+	-> each string contain group of value sperated by comma, here we use two variable so two argument passed 	    in method.
+		eg: @CvsSource(value={"23,34", "39,78"}) // two value,two argument weight(double),height(double)
+		eg: @CvsSource(value={"1,2,3","4,5,6"}) // three value, so three argument is required.
+
+		eg: @ParameterizedTest
+		    @CsvSource({ "2, even", "3, odd"})
+		    void checkCsvSource(int number, String expected) {
+			assertEquals(StringUtils.equals(expected, "even") ? 0 : 1, number % 2);
+		    }
+
+
+eg:
+	@ParameterizedTest(name="Weight: {0},Height: {1}")
+        @CsvSource(value={"89.0,1.73","90.0,1.75","78.0,1.75"})
+        void shouldReturnTrueWhenDietRecomended(double codeWeight, double codeHeight){
+        	// given
+        	double weight=codeWeight;
+        	double height=codeHeight;
+
+        	// when
+        	boolean result=BMICalculator.isDietRecommended(weight,height);
+
+        	//then
+        	assertTrue( result);
+    	}
+
+  -> The number inside currly bracket is refred to the vlaue pass to that test case, the first value have index 0
+     refer to the 1st argument in method(weight), the second value have index 1 refer to 2nd argument in      	method(height).
+
+@Reapeatedtest(10) 
+++++++++++++++++++++
+-> if use this annotation, as we see 10 is passed, so it will run same method test case 10 times.
+-> @RepeatedTest( value = 3,name = RepeatedTest.SHORT_DISPLAY_NAME)
+
+Performance test: some we have to write test that can in a sec, for that we use Performnace Test
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+=> assertTimeout(Duration duration, Executable executable)
+ -> duration is timelimit that we have to provide: Duration.ofMillis(1)
+
+eg:
+    @Test
+    public void shouldCoderReturnWortBMIInMillisecondWhenCoderHas1000Element(){
+
+        // given value
+        List coders= new ArrayList();
+
+        for(int i=0;i<1000;i++){
+            coders.add(new Coder(1.0+i,10.0+i));
+        }
+
+        //when
+        Executable executable=()-> BMICalculator.findCoderWithWorstBMI(coders);
+
+        //then
+        assertTimeout(Duration.ofMillis(4),executable);
+    }
+
+@Nested on class level: we should put common method inside this class(nested class)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Test{
+	@Nested
+	class NestedTest{
+		// nestedTest1 method1
+		// nestedTest2 method2
+		// nestedTest3 method2
+	}
+}
+
+Other Annotation
++++++++++++++++++++
+
+=> @DisplayName("sample name") : to define your own name on method in unit test, we can deine own class name also.
+=> @Disabled : to skip the test running.
+
+
+
+
+
+
